@@ -1,0 +1,115 @@
+{
+	"info": {
+		"_postman_id": "5192e2f6-3ebe-443f-a00e-c3d4867f6f6e",
+		"name": "Signer codigos 400",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29460625",
+		"_collection_link": "https://red-satellite-829132.postman.co/workspace/minka-1.73~64d101f2-860b-49f9-9d5d-7726db261f1d/collection/29460625-5192e2f6-3ebe-443f-a00e-c3d4867f6f6e?action=share&source=collection_link&creator=29460625"
+	},
+	"item": [
+		{
+			"name": "Crear transferencias correctamente Signer Generico errores 400",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//GENERAR TOKEN\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"// Imprimir el comentario en la consola de Newman\r",
+							"console.log(\"Comentario del caso de prueba: \", pm.iterationData.get(\"comentario\"));"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "<API_KEY>"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer <TOKEN>"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"source\": \"{{source}}\",\n    \"target\": \"{{target}}\",\n    \"amount\": \"{{amount}}\",\n    \"symbol\": \"$tin\",\n    \"labels\": {\n        \"type\": \"SEND\",\n        \"domain\": \"tin\",\n        \"description\": \"\",\n        \"sourceChannel\": \"APP\",\n        \"tx_id\": \"{{$randomPhoneNumber}}\",\n        \"source\": {\n            \"name\": \"{{name}}\",\n            \"proprietary\": \"{{proprietary}}\",\n            \"identification\": \"{{identificacion}}\"\n        },\n        \"target\": {\n            \"name\": \"{{name1}}\",\n            \"proprietary\": \"{{proprietary1}}\",\n            \"identification\": \"{{identificacion1}}\"\n        },\n        \"deviceFingerPrint\": {\n            \"hash\": \"{{$randomUUID}}\",\n            \"ipAddress\": \"190.242.46.190\",\n            \"geolocation\": \"DC\",\n            \"country\": \"Colombia\",\n            \"city\": \"Bogota\",\n            \"mobileDevice\": \"a7dd84ds8\",\n            \"SIMCardId\": \"aaabb\",\n            \"model\": \"samnsung\",\n            \"operator\": \"claro\"\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/transfer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"transfer"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

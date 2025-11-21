@@ -1,0 +1,7 @@
+﻿source,target,type,tx_id,amount,received,dispatched,comentario
+wUydvLj67UbJbb3jZoa3Dk6RLFRDPvS3Vd,wQT6EGz6G3guxYLjBNSg2u3XxCc9SDMvpk,SENDMOL,{{codigo_generado}},11552001,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},Validar la respuesta del MOL para una instrucción de Pago Intra-SPBVI cuando el monto es superior a 1000 UVB informadas en la regulación
+wUydvLj67UbJbb3jZoa3Dk6RLFRDPvS3Vd,wQT6EGz6G3guxYLjBNSg2u3XxCc9SDMvpk,SENDMOL,,115520,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},Validar la funcionalidad de campo (tx_id) campo vacio
+wUydvLj67UbJbb3jZoa3Dk6RLFRDPvS3Vd,wQT6EGz6G3guxYLjBNSg2u3XxCc9SDMvpk,SENDMOL,null,115520,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},Validar la funcionalidad de campo (tx_id) campo null
+wUydvLj67UbJbb3jZoa3Dk6RLFRDPvS3Vd,wQT6EGz6G3guxYLjBNSg2u3XxCc9SDMvpk,SENDMOL,fdskfjdsklfs%&&$%$##$%%#,115520,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},Validar la funcionalidad de campo (tx_id) solo con carecteres especiales
+wUydvLj67UbJbb3jZoa3Dk6RLFRDPvS3Vd,wQT6EGz6G3guxYLjBNSg2u3XxCc9SDMvpk,SENDMOL,kfdjfdkfjdskfjdskfjk4330dskdfkjsd,115520,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},Validar la funcionalidad de campo (tx_id) solo con carecteres alfabéticos
+wUydvLj67UbJbb3jZoa3Dk6RLFRDPvS3Vd,wQT6EGz6G3guxYLjBNSg2u3XxCc9SDMvpk,SENDMOL,20251110900504002TFY200100211243167,115520,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},Validar la funcionalidad de campo (tx_id) Duplicado

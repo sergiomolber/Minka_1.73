@@ -1,0 +1,13 @@
+// Convertir la respuesta en JSON
+let response = pm.response.json();
+
+// Extraer tx_ref
+let tx_ref = response.labels.tx_ref;
+
+// Guardar en una variable de entorno en Postman
+pm.environment.set("tx_ref", tx_ref);
+
+// Mostrar en la consola de Postman
+console.log("tx_ref:", tx_ref);
+// Imprimir el comentario en la consola de Newman
+console.log("Comentario del caso de prueba: ", pm.iterationData.get("comentario"));

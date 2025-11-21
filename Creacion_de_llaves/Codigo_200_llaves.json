@@ -1,0 +1,231 @@
+{
+	"info": {
+		"_postman_id": "f4181096-03b2-4dc1-9fe8-184fcaf3a2f2",
+		"name": "Codigos de respuesta 200",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29460625",
+		"_collection_link": "https://red-satellite-829132.postman.co/workspace/MINKA-FASE-2~0b289b12-251d-435b-869e-33b7b107018f/collection/29460625-f4181096-03b2-4dc1-9fe8-184fcaf3a2f2?action=share&source=collection_link&creator=29460625"
+	},
+	"item": [
+		{
+			"name": "Create Signer Regulado codigo 200",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const randomCel = _.random(3102047071,3992047071)\r",
+							"pm.variables.set(\"randomCel\", randomCel );\r",
+							"// Genera un valor aleatorio\r",
+							"let randomValue = Math.random();\r",
+							"\r",
+							"// Generar número aleatorio de 12 dígitos\r",
+							"let identificacion = Math.floor(Math.random() * 9e11 + 1e11).toString() + Math.floor(Math.random() * 1e3).toString().padStart(3, '0');\r",
+							"\r",
+							"// Guardar como variable de entorno\r",
+							"pm.environment.set(\"identificacion\", identificacion);\r",
+							"\r",
+							"\r",
+							"\r",
+							"function generateRandomString(length) {\r",
+							"    const letters = 'abcdefghijklmnopqrstuvwxyz';\r",
+							"    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';\r",
+							"    let result = '';\r",
+							"\r",
+							"    // Asegura que el primer carácter sea una letra\r",
+							"    result += letters.charAt(Math.floor(Math.random() * letters.length));\r",
+							"\r",
+							"    // Genera el resto de la cadena con letras y números\r",
+							"    for (let i = 1; i < length; i++) {\r",
+							"        result += characters.charAt(Math.floor(Math.random() * characters.length));\r",
+							"    }\r",
+							"\r",
+							"    return result;\r",
+							"}\r",
+							"\r",
+							"const domain = 'example.com'; // Cambia este dominio si necesitas otro\r",
+							"const randomLocalPart = generateRandomString(8); // Parte local del correo\r",
+							"const randomEmail = `${randomLocalPart}@${domain}`;\r",
+							"\r",
+							"pm.environment.set('randomEmail', randomEmail);\r",
+							"\r",
+							"\r",
+							"// Generar una cadena aleatoria de 10 caracteres para el campo ALFANUMERICO\r",
+							"function generateRandomString(length) {\r",
+							"    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+							"    let result = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        result += characters.charAt(Math.floor(Math.random() * characters.length));\r",
+							"    }\r",
+							"    return result;\r",
+							"}\r",
+							"\r",
+							"// Crear la variable\r",
+							"const alfanumerico = `@${generateRandomString(10)}`;\r",
+							"pm.environment.set('alfanumerico', alfanumerico);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Generar una cadena de 8 dígitos aleatorios para el campo MERCHANTID\r",
+							"function generateRandomDigits(length) {\r",
+							"    let result = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        result += Math.floor(Math.random() * 10); // Generar un dígito aleatorio entre 0 y 9\r",
+							"    }\r",
+							"    return result;\r",
+							"}\r",
+							"\r",
+							"// Crear la variable con prefijo '00'\r",
+							"const merchant = `00${generateRandomDigits(8)}`;\r",
+							"pm.environment.set('merchant', merchant);\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Función para generar una cadena aleatoria de dígitos de longitud especificada para el campo NUMERO DE CUENTA\r",
+							"function generateRandomNumericString(length) {\r",
+							"    const charset = '0123456789';  // Conjunto de caracteres numéricos\r",
+							"    let randomString = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        const randomIndex = Math.floor(Math.random() * charset.length);\r",
+							"        randomString += charset[randomIndex];\r",
+							"    }\r",
+							"    return randomString;\r",
+							"}\r",
+							"\r",
+							"// Genera un valor aleatorio de 34 dígitos\r",
+							"const randomNumericValue = generateRandomNumericString(34);\r",
+							"\r",
+							"// Establece el valor aleatorio en una variable\r",
+							"pm.variables.set(\"randomNumericValue\", randomNumericValue);\r",
+							"\r",
+							"\r",
+							"//OBTENER FECHA ACTUAL\r",
+							"const date = new Date();\r",
+							" \r",
+							"// Obtener componentes con ceros a la izquierda\r",
+							"function pad(num, size = 2) {\r",
+							"    return ('00' + num).slice(-size);\r",
+							"}\r",
+							" \r",
+							"// Obtener la zona horaria en formato -05:00\r",
+							"function getTimeZoneOffset(date) {\r",
+							"    const offset = -date.getTimezoneOffset(); // en minutos\r",
+							"    const sign = offset >= 0 ? '+' : '-';\r",
+							"    const hours = pad(Math.floor(Math.abs(offset) / 60));\r",
+							"    const minutes = pad(Math.abs(offset) % 60);\r",
+							"    return `${sign}${hours}:${minutes}`;\r",
+							"}\r",
+							" \r",
+							"const isoDate = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}.${pad(date.getMilliseconds(), 3)}${getTimeZoneOffset(date)}`;\r",
+							" \r",
+							"pm.environment.set(\"fecha_actual_formato_iso\", isoDate);\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							"//Generar valor alfanumerico para el numero de identificacion\r",
+							"function generarAlfanumerico(longitud) {\r",
+							"    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+							"    let resultado = '';\r",
+							"    for (let i = 0; i < longitud; i++) {\r",
+							"        resultado += caracteres.charAt(Math.floor(Math.random() * caracteres.length));\r",
+							"    }\r",
+							"    return resultado;\r",
+							"}\r",
+							"\r",
+							"// Genera y guarda la variable\r",
+							"let valor = generarAlfanumerico(12);  // Cambia \"12\" por la longitud que necesites\r",
+							"pm.environment.set(\"id_aleatorio\", valor);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Extraer handle\", function () {\r",
+							"    let response = pm.response.json(); // Parsear la respuesta como JSON\r",
+							"    pm.environment.set(\"handle\", response.handle); // Guardar el valor en una variable de entorno\r",
+							"    \r",
+							"});\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"// Imprimir el comentario en la consola de Newman\r",
+							"console.log(\"Comentario del caso de prueba: \", pm.iterationData.get(\"comentario\"));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"labels\": {\n        \"aliasType\": {{aliasType}},\n        \"aliasValue\": {{aliasValue}},\n        \"type\": {{type}},\n        \"firstName\": {{firstName}},\n        \"secondName\": {{secondName}},\n        \"lastName\": {{lastName}},\n        \"secondLastName\": {{secondLastName}},\n        \"proprietary\": {{proprietary}},\n        \"identification\": {{identification}},\n        \"bankAccountType\": {{bankAccountType}},\n        \"bankAccountNumber\": {{bankAccountNumber}},\n        \"routerReference\": {{routerReference}},\n        \"targetSpbviCode\": {{targetSpbviCode}},\n        \"bankId\": {{bankId}},\n        \"consented\": {{consented}},\n        \"received\": {{received}},\n        \"dispatched\": {{dispatched}}\n    }\n}"
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

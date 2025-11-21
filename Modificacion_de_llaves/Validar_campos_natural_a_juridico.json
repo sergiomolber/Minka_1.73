@@ -1,0 +1,106 @@
+{
+	"info": {
+		"_postman_id": "aac84a1c-0b35-495e-b660-189dae0b87c1",
+		"name": "Validar Obligatoriedad de campos de natural a juridico",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29460625",
+		"_collection_link": "https://red-satellite-829132.postman.co/workspace/MINKA-FASE-2~0b289b12-251d-435b-869e-33b7b107018f/collection/29460625-aac84a1c-0b35-495e-b660-189dae0b87c1?action=share&source=collection_link&creator=29460625"
+	},
+	"item": [
+		{
+			"name": "Modificar Llave de persona Natural a Juridica - obligatoriedad de campos",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Imprimir el comentario en la consola de Newman\r",
+							"console.log(\"Comentario del caso de prueba: \", pm.iterationData.get(\"comentario\"));\r",
+							"\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"labels\": { \r\n      \"type\": {{type}},\r\n     \"name\": {{name}}\r\n   }\r\n }"
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer/wQyTgSoZqFMEZFqFa11cT7fjd22AwBF5ai",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer",
+						"wQyTgSoZqFMEZFqFa11cT7fjd22AwBF5ai"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

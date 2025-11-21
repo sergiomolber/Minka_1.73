@@ -1,0 +1,9 @@
+﻿source,target,type,received,dispatched,comentario
+{{NRIC}},{{NRIC}},SENDMOL,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},CP1-Realizar creacion de una tx con signer tipo NRIC y con signer tipo Regulado de forma correcta 
+{{EMAIL}},{{NRIC}},SENDMOL,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},CP2-Realizar creacion de una tx con signer tipo EMAIL y con signer tipo Regulado de forma correcta 
+{{PHONE}},{{NRIC}},SENDMOL,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},CP3-Realizar creacion de una tx con signer tipo CELULAR y con signer tipo IDENTIFICACION  de forma correcta 
+{{ALPHANUMERIC}},{{NRIC}},SENDMOL,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},CP4-Realizar creacion de una tx con signer tipo ALFANUMERICO  y con signer tipo IDENTIFICACION  de forma correcta 
+{{MERCHANT}},{{NRIC}},SENDMOL,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},CP5-Realizar creacion de una tx con signer tipo CODIGO DE COMERCIO  y con signer tipo IDENTIFICACION  de forma correcta 
+{{MERCHANT}},{{NRIC}},SENDMOL,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},Validar la creacion de tx tipo SENDMOL de forma correcta
+wMuT9WXDu86ushKcpE98c4NHLw7W3atYqr,wZ81qWGftQWm8NZ5MZCzgKXq7V2z2qeMNw,SENDMOL,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},Crear la transaccion con llaves reguladas y del mismo banco 
+wMuT9WXDu86ushKcpE98c4NHLw7W3atYqr,wMg2MfNugWhm68fYpKRKoUkeKEDNY6gGMa,SENDMOL,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},Crear la transaccion con llaves reguladas entre diferentes bancos 

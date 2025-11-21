@@ -1,0 +1,831 @@
+{
+	"info": {
+		"_postman_id": "1cd0c574-0f13-46d0-9e6e-a517eaefe6a4",
+		"name": "Modificacion codigos 200",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29460625",
+		"_collection_link": "https://red-satellite-829132.postman.co/workspace/MINKA-FASE-2~0b289b12-251d-435b-869e-33b7b107018f/collection/29460625-1cd0c574-0f13-46d0-9e6e-a517eaefe6a4?action=share&source=collection_link&creator=29460625"
+	},
+	"item": [
+		{
+			"name": "DC6_CP1 Validar la funcionalidad Modificación Nombre",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"// Verificar que NOMBRE se haya modificado\r",
+							"pm.test(\"El campo firstName es 'SERGIO'\", function () {\r",
+							"    pm.expect(response.labels.firstName).to.eql(\"SERGIO\");\r",
+							" \r",
+							"});\r",
+							"\r",
+							"pm.test(\"El campo secondName es 'ANDRES'\", function () {\r",
+							"    pm.expect(response.labels.secondName).to.eql(\"ANDRES\");\r",
+							" \r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"labels\": { \r\n       \"firstName\": \"SERGIO\",\r\n       \"secondName\": \"ANDRES\"\r\n   }\r\n }"
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer/wW9hkwfJPtR4FCDSorfQk8qyA6CcgiKXuD",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer",
+						"wW9hkwfJPtR4FCDSorfQk8qyA6CcgiKXuD"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DC6_CP2 Validar la funcionalidad Modificación Apellidos",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Obtener el body de la respuesta\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"// Verificar que Apellidos se hayan modificado\r",
+							"pm.test(\"El campo lastName es 'MOLINA'\", function () {\r",
+							"    pm.expect(response.labels.lastName).to.eql(\"MOLINA\");\r",
+							" \r",
+							"});\r",
+							"\r",
+							"   pm.test(\"El campo secondLastName es 'PALENCIA'\",\r",
+							"   function () {\r",
+							"    pm.expect(response.labels.secondLastName).to.eql(\"PALENCIA\");\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"labels\": { \r\n        \"lastName\": \"MOLINA\",\r\n        \"secondLastName\": \"PALENCIA\"\r\n   }\r\n }"
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer/wZBQpx5wkDwD9JVCBxNzLvdHRHiWwsmTeV",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer",
+						"wZBQpx5wkDwD9JVCBxNzLvdHRHiWwsmTeV"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DC6_CP3 Validar la funcionalidad Modificación Nombre y Apellidos",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Obtener el body de la respuesta\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"labels\": { \r\n      \"firstName\": \"JORGE\",\r\n       \"secondName\": \"ENRIQUE\",\r\n        \"lastName\": \"ORTIZ\",\r\n        \"secondLastName\": \"POLANCO\"\r\n   }\r\n }"
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer/waDDmGDBua4DWLPSmrK8tpeveRDPZWAL6k",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer",
+						"waDDmGDBua4DWLPSmrK8tpeveRDPZWAL6k"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DC9_CP1 Validar la funcionalidad Modificar tipo de medio de pago",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Obtener el body de la respuesta\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"// Verificar que bankAccountType es igual a \"DBMO\"\r",
+							"pm.test(\"El campo bankAccountType es 'DBMO'\", function () {\r",
+							"    pm.expect(response.labels.bankAccountType).to.eql(\"DBMO\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"labels\": { \r\n      \"bankAccountType\": \"DBMO\"\r\n   }\r\n }"
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer/wPnk876kMkzC2b3vMwn6u2BVDuvM9Uzx8Z",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer",
+						"wPnk876kMkzC2b3vMwn6u2BVDuvM9Uzx8Z"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DC9_CP2 Validar la funcionalidad Modificar el identificador del medio de pago",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Función para generar una cadena aleatoria de dígitos de longitud especificada para el campo NUMERO DE CUENTA\r",
+							"function generateRandomNumericString(length) {\r",
+							"    const charset = '0123456789';  // Conjunto de caracteres numéricos\r",
+							"    let randomString = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        const randomIndex = Math.floor(Math.random() * charset.length);\r",
+							"        randomString += charset[randomIndex];\r",
+							"    }\r",
+							"    return randomString;\r",
+							"}\r",
+							"\r",
+							"// Genera un valor aleatorio de 34 dígitos\r",
+							"const randomNumericValue = generateRandomNumericString(34);\r",
+							"\r",
+							"// Establece el valor aleatorio en una variable\r",
+							"pm.variables.set(\"randomNumericValue\", randomNumericValue)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"labels\": { \r\n      \"bankAccountNumber\": \"{{randomNumericValue}}\"\r\n   }\r\n }"
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer/wcr7cXVG16bBt8WGhnf2mFJad1SogxuN19",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer",
+						"wcr7cXVG16bBt8WGhnf2mFJad1SogxuN19"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DC9_CP3 Validar la funcionalidad Modificar tipo e identificador medio de pago",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Función para generar una cadena aleatoria de dígitos de longitud especificada para el campo NUMERO DE CUENTA\r",
+							"function generateRandomNumericString(length) {\r",
+							"    const charset = '0123456789';  // Conjunto de caracteres numéricos\r",
+							"    let randomString = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        const randomIndex = Math.floor(Math.random() * charset.length);\r",
+							"        randomString += charset[randomIndex];\r",
+							"    }\r",
+							"    return randomString;\r",
+							"}\r",
+							"\r",
+							"// Genera un valor aleatorio de 34 dígitos\r",
+							"const randomNumericValue = generateRandomNumericString(34);\r",
+							"\r",
+							"// Establece el valor aleatorio en una variable\r",
+							"pm.variables.set(\"randomNumericValue\", randomNumericValue)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"labels\": { \r\n    \"bankAccountType\": \"DBMI\",\r\n      \"bankAccountNumber\": \"{{randomNumericValue}}\"\r\n   }\r\n }"
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer/wbhTRbLGUa5mS1X8ox9CJc287UtQwfZzfC",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer",
+						"wbhTRbLGUa5mS1X8ox9CJc287UtQwfZzfC"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DC10_CP1 Validar la funcionalidad Modificar la EASPBV receptora",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Función para generar una cadena aleatoria de dígitos de longitud especificada para el campo NUMERO DE CUENTA\r",
+							"function generateRandomNumericString(length) {\r",
+							"    const charset = '0123456789';  // Conjunto de caracteres numéricos\r",
+							"    let randomString = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        const randomIndex = Math.floor(Math.random() * charset.length);\r",
+							"        randomString += charset[randomIndex];\r",
+							"    }\r",
+							"    return randomString;\r",
+							"}\r",
+							"\r",
+							"// Genera un valor aleatorio de 34 dígitos\r",
+							"const randomNumericValue = generateRandomNumericString(34);\r",
+							"\r",
+							"// Establece el valor aleatorio en una variable\r",
+							"pm.variables.set(\"randomNumericValue\", randomNumericValue)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"// Verificar que EASPBV se haya modificado\r",
+							"pm.test(\"El campo EASPBV es 'ENT'\", function () {\r",
+							"    pm.expect(response.labels.targetSpbviCode).to.eql(\"ENT\");\r",
+							" \r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"labels\": { \r\n   \"targetSpbviCode\": \"ENT\"\r\n   }\r\n }"
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer/wNVLNcT6D9oP1iMzwK21UrSvYkv7powa3H",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer",
+						"wNVLNcT6D9oP1iMzwK21UrSvYkv7powa3H"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Gestión de Llaves AMND al DICE - Happy Path",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Obtener el body de la respuesta\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"labels\": { \r\n      \"firstName\": \"JORGE\",\r\n       \"secondName\": \"ENRIQUE\",\r\n        \"lastName\": \"ORTIZ\",\r\n        \"secondLastName\": \"POLANCO\"\r\n   }\r\n }"
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer/wTE57CJC7YsUCnuc2wL8ZhAJwob2G3uozW",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer",
+						"wTE57CJC7YsUCnuc2wL8ZhAJwob2G3uozW"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

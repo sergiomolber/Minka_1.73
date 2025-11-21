@@ -1,0 +1,10 @@
+﻿source,target,proprietary,proprietary1,name,name1,identificacion,identificacion1,amount,comentario
+svgs:200156743@3854,wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,CC,CC,,{{$randomFullName}},3432432432,45435345,1254335,Validar la funcionalidad del campo (Source) el name este vacio
+wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,wdtRpByvCEQ2FZbReWb5XhghiWURdooo7y,CE,,{{$randomFullName}},{{$randomFullName}},3432432432,45435345,1254335,Validar la funcionalidad del campo (Source) el propietary este vacio
+wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,wdkKTxyG8FVVturw1pPuskE35WSZRzSKEq,PEP,PEP,{{$randomFullName}},{{$randomFullName}},,45435345,1254335,Validar la funcionalidad del campo (Source) el identificacion este vacio
+svgs:200156743@3854,dord:12345673238346456456@3854,NIT,NIT,{{$randomFullName}},,3432432432,45435345,1254335,Validar la funcionalidad del campo (Target) el name este vacio
+wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,svgs:200156743@3854,NUIP,,{{$randomFullName}},{{$randomFullName}},3432432432,45435345,1254335,Validar la funcionalidad del campo (Target) el propietary este vacio
+wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,wQxf26iZuJowF3ooTiTSZNZ4YVuf6jtpjV,PPT,PPT,{{$randomFullName}},{{$randomFullName}},3432432432,,1254335,Validar la funcionalidad del campo (Target) el identificacion este vacio
+wdkKTxyG8FVVturw1pPuskE35WSZRzSKEq,wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,CC,CC,{{$randomFullName}},{{$randomFullName}},3432432432,45435345,,Validar la funcionalidad de liquidación (amount) campo vacio
+wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,wUDC4rq5y6k2AdVHzgr11HNGeHtWsts3Zy,CE,CE,{{$randomFullName}},{{$randomFullName}},3432432432,45435345,null,Validar la funcionalidad de liquidación (amount) campo null
+wbqj8aS1Fcpcqhdjrw2wUnZdN3tWo5XSzU,dord:12345673238346456456@3854,PEP,PEP,{{$randomFullName}},{{$randomFullName}},3432432432,45435345,5345345dfdfgfds,Validar la funcionalidad de liquidación (amount) solo con carecteres especiales

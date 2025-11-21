@@ -1,0 +1,2 @@
+level: log, messages: tx_ref:,02cYrxLy1zT5cqqJw
+level: log, messages: Comentario del caso de prueba: ,Pendiente por aceptación tipo request

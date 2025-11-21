@@ -1,0 +1,11 @@
+{
+   "labels": { 
+       "type": "PERSON",
+     "firstName": "CARLOS",
+     "secondName": "",
+     "lastName": "MARTINEZ",
+     "secondLastName": "",
+      "targetSpbviCode": "SRV"
+
+   }
+ }

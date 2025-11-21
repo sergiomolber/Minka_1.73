@@ -1,0 +1,64 @@
+const date = new Date();
+ 
+// Obtener componentes con ceros a la izquierda
+function pad(num, size = 2) {
+    return ('00' + num).slice(-size);
+}
+ 
+// Obtener la zona horaria en formato -05:00
+function getTimeZoneOffset(date) {
+    const offset = -date.getTimezoneOffset(); // en minutos
+    const sign = offset >= 0 ? '+' : '-';
+    const hours = pad(Math.floor(Math.abs(offset) / 60));
+    const minutes = pad(Math.abs(offset) % 60);
+    return `${sign}${hours}:${minutes}`;
+}
+ 
+const isoDate = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}.${pad(date.getMilliseconds(), 3)}${getTimeZoneOffset(date)}`;
+ 
+pm.environment.set("fecha_actual_formato_iso", isoDate);
+
+
+
+pm.sendRequest({
+    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',
+    method: 'POST',
+    header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: {
+        mode: 'urlencoded',
+        urlencoded: [
+            { key: 'grant_type', value: 'client_credentials' },
+            { key: 'client_id', value: pm.environment.get("client_id") },
+            { key: 'client_secret', value: pm.environment.get("client_secret") },
+            { key: 'audience', value: pm.environment.get("audience") } // opcional según el proveedor
+        ]
+    }
+}, function (err, res) {
+    if (err) {
+        console.log("Error al obtener el token:", err);
+    } else {
+        let token = res.json().access_token;
+        pm.environment.set("access_token", token);
+    }
+});
+
+// Obtener la fecha actual en formato YYYYMMDD
+const today = new Date();
+const yyyy = today.getFullYear();
+const mm = String(today.getMonth() + 1).padStart(2, '0'); // Meses comienzan desde 0
+const dd = String(today.getDate()).padStart(2, '0');
+const datePart = `${yyyy}${mm}${dd}`;
+
+// Parte fija
+const fixedPart = '900504001TFY200100211243';
+
+// Generar 3 dígitos variables (puedes cambiar esto por un contador si lo necesitas)
+const randomDigits = String(Math.floor(Math.random() * 1000)).padStart(3, '0');
+
+// Combinar todo
+const finalValue = `${datePart}${fixedPart}${randomDigits}`;
+
+// Guardar como variable global o de entorno
+pm.environment.set("codigo_generado", finalValue);

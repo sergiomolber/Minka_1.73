@@ -1,0 +1,986 @@
+{
+	"info": {
+		"_postman_id": "bbe145f1-54cb-4c25-876b-1805c0a6cce0",
+		"name": "Transacciones PSE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29460625",
+		"_collection_link": "https://red-satellite-829132.postman.co/workspace/MINKA-FASE-2~0b289b12-251d-435b-869e-33b7b107018f/collection/29460625-bbe145f1-54cb-4c25-876b-1805c0a6cce0?action=share&source=collection_link&creator=29460625"
+	},
+	"item": [
+		{
+			"name": "Create llave no regulado",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const randomCel = _.random(3102047071,3992047071)\r",
+							"pm.variables.set(\"randomCel\", randomCel );\r",
+							"// Genera un valor aleatorio\r",
+							"let randomValue = Math.random();\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parsear la respuesta JSON\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"// Capturar los valores deseados\r",
+							"let handle = response.handle;\r",
+							"let aliasValue = response.labels.aliasValue;\r",
+							"\r",
+							"\r",
+							"// Guardar en variables de entorno o colección\r",
+							"pm.environment.set(\"aliasValue\", aliasValue);\r",
+							"pm.environment.set(\"handle\", handle);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"labels\": {\n    \"aliasType\": \"PHONE\",\n    \"aliasValue\": \"{{randomCel}}\",\n     \"type\": \"BUSINESS\",\n     \"firstName\": \"Carlos\",\n     \"secondName\": \"Andres\",\n     \"lastName\": \"Gaviria\",\n     \"secondLastName\": \"Molina\",\n     \"proprietary\": \"CC\",\n     \"identification\": \"1032360057\",\n     \"bankAccountType\": \"DBMO\",\n     \"bankAccountNumber\": \"9888774774\",\n     \"routerReference\": \"$bancorojo\",\n     \"targetSpbviCode\": \"TFY\",\n     \"bankBicfi\": \"7095\",\n     \"bankId\": \"900504002\"\n    \n   }\n}"
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create llave no regulado - target",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const randomCel = _.random(3102047071,3992047071)\r",
+							"pm.variables.set(\"randomCel\", randomCel );\r",
+							"// Genera un valor aleatorio\r",
+							"let randomValue = Math.random();\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parsear la respuesta JSON\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"// Capturar los valores deseados\r",
+							"let handle = response.handle;\r",
+							"let aliasValue = response.labels.aliasValue;\r",
+							"\r",
+							"\r",
+							"// Guardar en variables de entorno o colección\r",
+							"pm.environment.set(\"aliasValue1\", aliasValue);\r",
+							"pm.environment.set(\"handle1\", handle);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"labels\": {\n    \"aliasType\": \"PHONE\",\n    \"aliasValue\": \"{{randomCel}}\",\n     \"type\": \"BUSINESS\",\n     \"firstName\": \"Carlos\",\n     \"secondName\": \"Andres\",\n     \"lastName\": \"Gaviria\",\n     \"secondLastName\": \"Molina\",\n     \"proprietary\": \"CC\",\n     \"identification\": \"1032360057\",\n     \"bankAccountType\": \"DBMO\",\n     \"bankAccountNumber\": \"9888774774\",\n     \"routerReference\": \"$bancorojo\",\n     \"targetSpbviCode\": \"TFY\",\n     \"bankBicfi\": \"7095\",\n     \"bankId\": \"900504002\"\n    \n   }\n}"
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear transferencia Tipo PSE",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImNsaWVudElkIjoiMzc1N2U1ZTRiNzBkZmNkMzFkZjNjMTY3NDBhNzY5NjkiLCJvcmdhbml6YXRpb24iOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImRvbWFpbiI6IiR0aW4iLCJyZWFsbSI6Im9yZ2FuaXphdGlvbiIsInNjb3BlcyI6WyJtYW5hZ2Vfb3duX3Jlc291cmNlcyIsInJlYWQtYnVzaW5lc3Mtd2FsbGV0cyIsInJlYWQtbWVyY2hhbnQtd2FsbGV0cyJdLCJyb2xlcyI6WyJiYW5rLW93bmVyIiwiYnVzaW5lc3Mtb3duZXIiLCJidXNpbmVzcy1zcG9uc29yLWJhbmsiXSwiaWF0IjoxNzUyMDA3NjkyLCJleHAiOjE3NTIwMTEyOTIsImlzcyI6Imh0dHBzOi8vbWlua2EuaW8ifQ.LHUgq9xu6DKtMvbIPYUcR947Kb3SnTtU2xhZ1ivknjcbNsJ0KOgKH4PjDsiVogeWn9a_npYSDlxn85jTCtUbog"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"source\":\"{{handle}}\",\n  \"target\":\"{{handle1}}\",\n  \"symbol\":\"$tin\",\n  \"amount\":\"143000\",\n  \"labels\":{\n  \t\"tx_id\": \"1336\",\n  \t\"type\":\"SEND\",\n    \"description\":\"Prueba wallet existente\",\n    \"numberOfTransactions\": \"1\",\n    \"sourceChannel\": \"PSE\",\n    \"sourceCreated\": \"2019-08-23T20:21:01.284\",\n    \"transactionPurpose\": \"TRANSFER\",\n    \"received\": \"2025-04-01T12:29:57.442-05:00\",\n    \"dispatched\":\"2025-04-01T12:29:57.442-05:00\",\n  \t\"deviceFingerPrint\": {\n  \t\t\"hash\": \"0c6e845d-ee0f-47eb-bd71-5e9ef2224125\",\n        \"ipAddress\": \"190.242.46.190\",\n        \"geolocation\": \"DC\",\n        \"country\": \"Colombia\",\n        \"city\": \"Bogota\",\n        \"mobileDevice\": \"a7dd84ds8\",\n        \"SIMCardId\": \"aaabb\",\n        \"model\": \"samnsung\",\n        \"operator\": \"claro\"\n  \t}\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/transfer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"transfer"
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://ach-minka-stg.transferenciasinmediatas.com/v1/transfer' \\\n--header 'Content-Type: application/json' \\\n--header 'x-api-key: {{x-api-key}}' \\\n--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImNsaWVudElkIjoiMzc1N2U1ZTRiNzBkZmNkMzFkZjNjMTY3NDBhNzY5NjkiLCJvcmdhbml6YXRpb24iOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImRvbWFpbiI6IiR0aW4iLCJyZWFsbSI6Im9yZ2FuaXphdGlvbiIsInNjb3BlcyI6WyJtYW5hZ2Vfb3duX3Jlc291cmNlcyIsInJlYWQtYnVzaW5lc3Mtd2FsbGV0cyIsInJlYWQtbWVyY2hhbnQtd2FsbGV0cyJdLCJyb2xlcyI6WyJiYW5rLW93bmVyIiwiYnVzaW5lc3Mtb3duZXIiLCJidXNpbmVzcy1zcG9uc29yLWJhbmsiXSwiaWF0IjoxNzUyMDA3NjkyLCJleHAiOjE3NTIwMTEyOTIsImlzcyI6Imh0dHBzOi8vbWlua2EuaW8ifQ.LHUgq9xu6DKtMvbIPYUcR947Kb3SnTtU2xhZ1ivknjcbNsJ0KOgKH4PjDsiVogeWn9a_npYSDlxn85jTCtUbog' \\\n--data '{\n  \"source\":\"wXRZdCXQmeNTpFqyPiZqTonvUAaurT4HA7\",\n  \"target\":\"\",\n  \"symbol\":\"$tin\",\n  \"amount\":\"143000\",\n  \"labels\":{\n  \t\"tx_id\": \"1336\",\n  \t\"type\":\"SEND\",\n    \"description\":\"Prueba wallet existente\",\n    \"numberOfTransactions\": \"1\",\n    \"sourceChannel\": \"PSE\",\n    \"sourceCreated\": \"2019-08-23T20:21:01.284\",\n    \"transactionPurpose\": \"TRANSFER\",\n    \"received\": \"2025-04-01T12:29:57.442-05:00\",\n    \"dispatched\":\"2025-04-01T12:29:57.442-05:00\",\n  \t\"deviceFingerPrint\": {\n  \t\t\"hash\": \"0c6e845d-ee0f-47eb-bd71-5e9ef2224125\",\n        \"ipAddress\": \"190.242.46.190\",\n        \"geolocation\": \"DC\",\n        \"country\": \"Colombia\",\n        \"city\": \"Bogota\",\n        \"mobileDevice\": \"a7dd84ds8\",\n        \"SIMCardId\": \"aaabb\",\n        \"model\": \"samnsung\",\n        \"operator\": \"claro\"\n  \t}\n  }\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear cuenta",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const randomCel = _.random(3102047071,3992047071)\r",
+							"pm.variables.set(\"randomCel\", randomCel );\r",
+							"// Genera un valor aleatorio\r",
+							"let randomValue = Math.random();\r",
+							"\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parsear la respuesta JSON\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"let handle = response.handle;\r",
+							"let aliasValue = response.labels.aliasValue;\r",
+							"\r",
+							"// Guardar en variables de entorno o colección\r",
+							"pm.environment.set(\"aliasValue\", aliasValue);\r",
+							"pm.environment.set(\"handle3\", handle);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJja3c5enBEVWVLaTFKZE9GU21saiIsImNsaWVudElkIjoiMTI2ZjdDQzc0REIwRkRCZmY5MkZjRWJmRUVkM0VGQWUiLCJvcmdhbml6YXRpb24iOiJja3c5enBEVWVLaTFKZE9GU21saiIsImRvbWFpbiI6IiR0aW4iLCJyZWFsbSI6Im9yZ2FuaXphdGlvbiIsInNjb3BlcyI6WyJtYW5hZ2Vfb3duX3Jlc291cmNlcyJdLCJyb2xlcyI6WyJiYW5rLW93bmVyIiwiYnVzaW5lc3Mtc3BvbnNvci1iYW5rIl0sImlhdCI6MTc1MzgwMjI1MywiZXhwIjoxNzUzODA1ODUzLCJpc3MiOiJodHRwczovL21pbmthLmlvIn0.lKp9WwwQ6YqMfBWJC3ZoaLpKi7jwmzckhwGHwSwwG96FXrGlLeQg9NuDLKJINCdg7uJJGide9RDk0hZXp45p4w"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"labels\": {\n    \"aliasType\": \"Account\",\n    \"aliasValue\": \"svgs:{{randomCel}}@bancorojo.co\",\n     \"type\": \"PERSON\",\n     \"firstName\": \"Juan\",\n     \"secondName\": \"Pablo\",\n     \"lastName\": \"Rojas\",\n     \"secondLastName\": \"Perez\",\n     \"proprietary\": \"CC\",\n     \"identification\": \"170253687\",\n     \"bankAccountType\": \"DBMO\",\n     \"bankAccountNumber\": \"200658741\",\n     \"routerReference\": \"$bancorojo\",\n     \"targetSpbviCode\": \"TFY\",\n     \"bankId\": \"900504002\",\n     \"consented\": \"\"\n    ,\n         \"received\": \"2025-07-29T10:20:40.307-05:00\",\n         \"dispatched\":\"2025-07-29T10:20:40.307-05:00\"\n   }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ach-minka-stg.transferenciasinmediatas.com/v1/signer",
+					"protocol": "https",
+					"host": [
+						"ach-minka-stg",
+						"transferenciasinmediatas",
+						"com"
+					],
+					"path": [
+						"v1",
+						"signer"
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://ach-minka-stg.transferenciasinmediatas.com/v1/signer' \\\n--header 'Content-Type: application/json' \\\n--header 'x-api-key: {{x-api-key}}' \\\n--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJja3c5enBEVWVLaTFKZE9GU21saiIsImNsaWVudElkIjoiMTI2ZjdDQzc0REIwRkRCZmY5MkZjRWJmRUVkM0VGQWUiLCJvcmdhbml6YXRpb24iOiJja3c5enBEVWVLaTFKZE9GU21saiIsImRvbWFpbiI6IiR0aW4iLCJyZWFsbSI6Im9yZ2FuaXphdGlvbiIsInNjb3BlcyI6WyJtYW5hZ2Vfb3duX3Jlc291cmNlcyJdLCJyb2xlcyI6WyJiYW5rLW93bmVyIiwiYnVzaW5lc3Mtc3BvbnNvci1iYW5rIl0sImlhdCI6MTc1MzgwMjI1MywiZXhwIjoxNzUzODA1ODUzLCJpc3MiOiJodHRwczovL21pbmthLmlvIn0.lKp9WwwQ6YqMfBWJC3ZoaLpKi7jwmzckhwGHwSwwG96FXrGlLeQg9NuDLKJINCdg7uJJGide9RDk0hZXp45p4w' \\\n--data-raw '{\n    \"labels\": {\n    \"aliasType\": \"Account\",\n    \"aliasValue\": \"svgs:33157354@bancorojo.co\",\n     \"type\": \"PERSON\",\n     \"firstName\": \"Juan\",\n     \"secondName\": \"Pablo\",\n     \"lastName\": \"Rojas\",\n     \"secondLastName\": \"Perez\",\n     \"proprietary\": \"CC\",\n     \"identification\": \"170253687\",\n     \"bankAccountType\": \"DBMO\",\n     \"bankAccountNumber\": \"200658741\",\n     \"routerReference\": \"$bancorojo\",\n     \"targetSpbviCode\": \"TFY\",\n     \"bankId\": \"900504002\",\n     \"consented\": \"\"\n    ,\n         \"received\": \"2025-07-29T10:20:40.307-05:00\",\n         \"dispatched\":\"2025-07-29T10:20:40.307-05:00\"\n   }\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear transferencia  entre cuentas",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImNsaWVudElkIjoiMzc1N2U1ZTRiNzBkZmNkMzFkZjNjMTY3NDBhNzY5NjkiLCJvcmdhbml6YXRpb24iOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImRvbWFpbiI6IiR0aW4iLCJyZWFsbSI6Im9yZ2FuaXphdGlvbiIsInNjb3BlcyI6WyJtYW5hZ2Vfb3duX3Jlc291cmNlcyIsInJlYWQtYnVzaW5lc3Mtd2FsbGV0cyIsInJlYWQtbWVyY2hhbnQtd2FsbGV0cyJdLCJyb2xlcyI6WyJiYW5rLW93bmVyIiwiYnVzaW5lc3Mtb3duZXIiLCJidXNpbmVzcy1zcG9uc29yLWJhbmsiXSwiaWF0IjoxNzUyMDA3NjkyLCJleHAiOjE3NTIwMTEyOTIsImlzcyI6Imh0dHBzOi8vbWlua2EuaW8ifQ.LHUgq9xu6DKtMvbIPYUcR947Kb3SnTtU2xhZ1ivknjcbNsJ0KOgKH4PjDsiVogeWn9a_npYSDlxn85jTCtUbog"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"source\":\"{{handle}}\",\n  \"target\":\"{{handle3}}\",\n  \"symbol\":\"$tin\",\n  \"amount\":\"143000\",\n  \"labels\":{\n  \t\"tx_id\": \"1336\",\n  \t\"type\":\"SEND\",\n    \"description\":\"Prueba wallet existente\",\n    \"numberOfTransactions\": \"1\",\n    \"sourceChannel\": \"APP\",\n    \"sourceCreated\": \"2019-08-23T20:21:01.284\",\n    \"transactionPurpose\": \"TRANSFER\",\n    \"received\": \"2025-04-01T12:29:57.442-05:00\",\n    \"dispatched\":\"2025-04-01T12:29:57.442-05:00\",\n  \t\"deviceFingerPrint\": {\n  \t\t\"hash\": \"0c6e845d-ee0f-47eb-bd71-5e9ef2224125\",\n        \"ipAddress\": \"190.242.46.190\",\n        \"geolocation\": \"DC\",\n        \"country\": \"Colombia\",\n        \"city\": \"Bogota\",\n        \"mobileDevice\": \"a7dd84ds8\",\n        \"SIMCardId\": \"aaabb\",\n        \"model\": \"samnsung\",\n        \"operator\": \"claro\"\n  \t}\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/transfer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"transfer"
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://ach-minka-stg.transferenciasinmediatas.com/v1/transfer' \\\n--header 'Content-Type: application/json' \\\n--header 'x-api-key: {{x-api-key}}' \\\n--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImNsaWVudElkIjoiMzc1N2U1ZTRiNzBkZmNkMzFkZjNjMTY3NDBhNzY5NjkiLCJvcmdhbml6YXRpb24iOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImRvbWFpbiI6IiR0aW4iLCJyZWFsbSI6Im9yZ2FuaXphdGlvbiIsInNjb3BlcyI6WyJtYW5hZ2Vfb3duX3Jlc291cmNlcyIsInJlYWQtYnVzaW5lc3Mtd2FsbGV0cyIsInJlYWQtbWVyY2hhbnQtd2FsbGV0cyJdLCJyb2xlcyI6WyJiYW5rLW93bmVyIiwiYnVzaW5lc3Mtb3duZXIiLCJidXNpbmVzcy1zcG9uc29yLWJhbmsiXSwiaWF0IjoxNzUyMDA3NjkyLCJleHAiOjE3NTIwMTEyOTIsImlzcyI6Imh0dHBzOi8vbWlua2EuaW8ifQ.LHUgq9xu6DKtMvbIPYUcR947Kb3SnTtU2xhZ1ivknjcbNsJ0KOgKH4PjDsiVogeWn9a_npYSDlxn85jTCtUbog' \\\n--data '{\n  \"source\":\"wXRZdCXQmeNTpFqyPiZqTonvUAaurT4HA7\",\n  \"target\":\"\",\n  \"symbol\":\"$tin\",\n  \"amount\":\"143000\",\n  \"labels\":{\n  \t\"tx_id\": \"1336\",\n  \t\"type\":\"SEND\",\n    \"description\":\"Prueba wallet existente\",\n    \"numberOfTransactions\": \"1\",\n    \"sourceChannel\": \"PSE\",\n    \"sourceCreated\": \"2019-08-23T20:21:01.284\",\n    \"transactionPurpose\": \"TRANSFER\",\n    \"received\": \"2025-04-01T12:29:57.442-05:00\",\n    \"dispatched\":\"2025-04-01T12:29:57.442-05:00\",\n  \t\"deviceFingerPrint\": {\n  \t\t\"hash\": \"0c6e845d-ee0f-47eb-bd71-5e9ef2224125\",\n        \"ipAddress\": \"190.242.46.190\",\n        \"geolocation\": \"DC\",\n        \"country\": \"Colombia\",\n        \"city\": \"Bogota\",\n        \"mobileDevice\": \"a7dd84ds8\",\n        \"SIMCardId\": \"aaabb\",\n        \"model\": \"samnsung\",\n        \"operator\": \"claro\"\n  \t}\n  }\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear transferencia  entre cuentas sin bankdomain activo",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImNsaWVudElkIjoiMzc1N2U1ZTRiNzBkZmNkMzFkZjNjMTY3NDBhNzY5NjkiLCJvcmdhbml6YXRpb24iOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImRvbWFpbiI6IiR0aW4iLCJyZWFsbSI6Im9yZ2FuaXphdGlvbiIsInNjb3BlcyI6WyJtYW5hZ2Vfb3duX3Jlc291cmNlcyIsInJlYWQtYnVzaW5lc3Mtd2FsbGV0cyIsInJlYWQtbWVyY2hhbnQtd2FsbGV0cyJdLCJyb2xlcyI6WyJiYW5rLW93bmVyIiwiYnVzaW5lc3Mtb3duZXIiLCJidXNpbmVzcy1zcG9uc29yLWJhbmsiXSwiaWF0IjoxNzUyMDA3NjkyLCJleHAiOjE3NTIwMTEyOTIsImlzcyI6Imh0dHBzOi8vbWlua2EuaW8ifQ.LHUgq9xu6DKtMvbIPYUcR947Kb3SnTtU2xhZ1ivknjcbNsJ0KOgKH4PjDsiVogeWn9a_npYSDlxn85jTCtUbog"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"source\":\"{{handle}}\",\n  \"target\":\"svgs:3470506397@bancoamarillo.co\",\n  \"symbol\":\"$tin\",\n  \"amount\":\"143000\",\n  \"labels\":{\n  \t\"tx_id\": \"1336\",\n  \t\"type\":\"SEND\",\n    \"description\":\"Prueba wallet existente\",\n    \"numberOfTransactions\": \"1\",\n    \"sourceChannel\": \"APP\",\n    \"sourceCreated\": \"2019-08-23T20:21:01.284\",\n    \"transactionPurpose\": \"TRANSFER\",\n    \"received\": \"2025-04-01T12:29:57.442-05:00\",\n    \"dispatched\":\"2025-04-01T12:29:57.442-05:00\",\n  \t\"deviceFingerPrint\": {\n  \t\t\"hash\": \"0c6e845d-ee0f-47eb-bd71-5e9ef2224125\",\n        \"ipAddress\": \"190.242.46.190\",\n        \"geolocation\": \"DC\",\n        \"country\": \"Colombia\",\n        \"city\": \"Bogota\",\n        \"mobileDevice\": \"a7dd84ds8\",\n        \"SIMCardId\": \"aaabb\",\n        \"model\": \"samnsung\",\n        \"operator\": \"claro\"\n  \t}\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/transfer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"transfer"
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://ach-minka-stg.transferenciasinmediatas.com/v1/transfer' \\\n--header 'Content-Type: application/json' \\\n--header 'x-api-key: {{x-api-key}}' \\\n--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImNsaWVudElkIjoiMzc1N2U1ZTRiNzBkZmNkMzFkZjNjMTY3NDBhNzY5NjkiLCJvcmdhbml6YXRpb24iOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImRvbWFpbiI6IiR0aW4iLCJyZWFsbSI6Im9yZ2FuaXphdGlvbiIsInNjb3BlcyI6WyJtYW5hZ2Vfb3duX3Jlc291cmNlcyIsInJlYWQtYnVzaW5lc3Mtd2FsbGV0cyIsInJlYWQtbWVyY2hhbnQtd2FsbGV0cyJdLCJyb2xlcyI6WyJiYW5rLW93bmVyIiwiYnVzaW5lc3Mtb3duZXIiLCJidXNpbmVzcy1zcG9uc29yLWJhbmsiXSwiaWF0IjoxNzUyMDA3NjkyLCJleHAiOjE3NTIwMTEyOTIsImlzcyI6Imh0dHBzOi8vbWlua2EuaW8ifQ.LHUgq9xu6DKtMvbIPYUcR947Kb3SnTtU2xhZ1ivknjcbNsJ0KOgKH4PjDsiVogeWn9a_npYSDlxn85jTCtUbog' \\\n--data '{\n  \"source\":\"wXRZdCXQmeNTpFqyPiZqTonvUAaurT4HA7\",\n  \"target\":\"\",\n  \"symbol\":\"$tin\",\n  \"amount\":\"143000\",\n  \"labels\":{\n  \t\"tx_id\": \"1336\",\n  \t\"type\":\"SEND\",\n    \"description\":\"Prueba wallet existente\",\n    \"numberOfTransactions\": \"1\",\n    \"sourceChannel\": \"PSE\",\n    \"sourceCreated\": \"2019-08-23T20:21:01.284\",\n    \"transactionPurpose\": \"TRANSFER\",\n    \"received\": \"2025-04-01T12:29:57.442-05:00\",\n    \"dispatched\":\"2025-04-01T12:29:57.442-05:00\",\n  \t\"deviceFingerPrint\": {\n  \t\t\"hash\": \"0c6e845d-ee0f-47eb-bd71-5e9ef2224125\",\n        \"ipAddress\": \"190.242.46.190\",\n        \"geolocation\": \"DC\",\n        \"country\": \"Colombia\",\n        \"city\": \"Bogota\",\n        \"mobileDevice\": \"a7dd84ds8\",\n        \"SIMCardId\": \"aaabb\",\n        \"model\": \"samnsung\",\n        \"operator\": \"claro\"\n  \t}\n  }\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear transferencia Tipo PSE wallet inexistente",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImNsaWVudElkIjoiMzc1N2U1ZTRiNzBkZmNkMzFkZjNjMTY3NDBhNzY5NjkiLCJvcmdhbml6YXRpb24iOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImRvbWFpbiI6IiR0aW4iLCJyZWFsbSI6Im9yZ2FuaXphdGlvbiIsInNjb3BlcyI6WyJtYW5hZ2Vfb3duX3Jlc291cmNlcyIsInJlYWQtYnVzaW5lc3Mtd2FsbGV0cyIsInJlYWQtbWVyY2hhbnQtd2FsbGV0cyJdLCJyb2xlcyI6WyJiYW5rLW93bmVyIiwiYnVzaW5lc3Mtb3duZXIiLCJidXNpbmVzcy1zcG9uc29yLWJhbmsiXSwiaWF0IjoxNzUyMDA3NjkyLCJleHAiOjE3NTIwMTEyOTIsImlzcyI6Imh0dHBzOi8vbWlua2EuaW8ifQ.LHUgq9xu6DKtMvbIPYUcR947Kb3SnTtU2xhZ1ivknjcbNsJ0KOgKH4PjDsiVogeWn9a_npYSDlxn85jTCtUbog"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"source\":\"{{handle}}\",\n  \"target\":\"wNEAufWP3j2XwN8cYTkSFnYnM6FPpH4T09\",\n  \"symbol\":\"$tin\",\n  \"amount\":\"143000\",\n  \"labels\":{\n  \t\"tx_id\": \"1336\",\n  \t\"type\":\"SEND\",\n    \"description\":\"Prueba wallet existente\",\n    \"numberOfTransactions\": \"1\",\n    \"sourceChannel\": \"PSE\",\n    \"sourceCreated\": \"2019-08-23T20:21:01.284\",\n    \"transactionPurpose\": \"TRANSFER\",\n    \"received\": \"2025-04-01T12:29:57.442-05:00\",\n    \"dispatched\":\"2025-04-01T12:29:57.442-05:00\",\n  \t\"deviceFingerPrint\": {\n  \t\t\"hash\": \"0c6e845d-ee0f-47eb-bd71-5e9ef2224125\",\n        \"ipAddress\": \"190.242.46.190\",\n        \"geolocation\": \"DC\",\n        \"country\": \"Colombia\",\n        \"city\": \"Bogota\",\n        \"mobileDevice\": \"a7dd84ds8\",\n        \"SIMCardId\": \"aaabb\",\n        \"model\": \"samnsung\",\n        \"operator\": \"claro\"\n  \t}\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/transfer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"transfer"
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://ach-minka-stg.transferenciasinmediatas.com/v1/transfer' \\\n--header 'Content-Type: application/json' \\\n--header 'x-api-key: {{x-api-key}}' \\\n--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImNsaWVudElkIjoiMzc1N2U1ZTRiNzBkZmNkMzFkZjNjMTY3NDBhNzY5NjkiLCJvcmdhbml6YXRpb24iOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImRvbWFpbiI6IiR0aW4iLCJyZWFsbSI6Im9yZ2FuaXphdGlvbiIsInNjb3BlcyI6WyJtYW5hZ2Vfb3duX3Jlc291cmNlcyIsInJlYWQtYnVzaW5lc3Mtd2FsbGV0cyIsInJlYWQtbWVyY2hhbnQtd2FsbGV0cyJdLCJyb2xlcyI6WyJiYW5rLW93bmVyIiwiYnVzaW5lc3Mtb3duZXIiLCJidXNpbmVzcy1zcG9uc29yLWJhbmsiXSwiaWF0IjoxNzUyMDA3NjkyLCJleHAiOjE3NTIwMTEyOTIsImlzcyI6Imh0dHBzOi8vbWlua2EuaW8ifQ.LHUgq9xu6DKtMvbIPYUcR947Kb3SnTtU2xhZ1ivknjcbNsJ0KOgKH4PjDsiVogeWn9a_npYSDlxn85jTCtUbog' \\\n--data '{\n  \"source\":\"wXRZdCXQmeNTpFqyPiZqTonvUAaurT4HA7\",\n  \"target\":\"\",\n  \"symbol\":\"$tin\",\n  \"amount\":\"143000\",\n  \"labels\":{\n  \t\"tx_id\": \"1336\",\n  \t\"type\":\"SEND\",\n    \"description\":\"Prueba wallet existente\",\n    \"numberOfTransactions\": \"1\",\n    \"sourceChannel\": \"PSE\",\n    \"sourceCreated\": \"2019-08-23T20:21:01.284\",\n    \"transactionPurpose\": \"TRANSFER\",\n    \"received\": \"2025-04-01T12:29:57.442-05:00\",\n    \"dispatched\":\"2025-04-01T12:29:57.442-05:00\",\n  \t\"deviceFingerPrint\": {\n  \t\t\"hash\": \"0c6e845d-ee0f-47eb-bd71-5e9ef2224125\",\n        \"ipAddress\": \"190.242.46.190\",\n        \"geolocation\": \"DC\",\n        \"country\": \"Colombia\",\n        \"city\": \"Bogota\",\n        \"mobileDevice\": \"a7dd84ds8\",\n        \"SIMCardId\": \"aaabb\",\n        \"model\": \"samnsung\",\n        \"operator\": \"claro\"\n  \t}\n  }\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear transferencia Tipo PSE wallet nulo",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImNsaWVudElkIjoiMzc1N2U1ZTRiNzBkZmNkMzFkZjNjMTY3NDBhNzY5NjkiLCJvcmdhbml6YXRpb24iOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImRvbWFpbiI6IiR0aW4iLCJyZWFsbSI6Im9yZ2FuaXphdGlvbiIsInNjb3BlcyI6WyJtYW5hZ2Vfb3duX3Jlc291cmNlcyIsInJlYWQtYnVzaW5lc3Mtd2FsbGV0cyIsInJlYWQtbWVyY2hhbnQtd2FsbGV0cyJdLCJyb2xlcyI6WyJiYW5rLW93bmVyIiwiYnVzaW5lc3Mtb3duZXIiLCJidXNpbmVzcy1zcG9uc29yLWJhbmsiXSwiaWF0IjoxNzUyMDA3NjkyLCJleHAiOjE3NTIwMTEyOTIsImlzcyI6Imh0dHBzOi8vbWlua2EuaW8ifQ.LHUgq9xu6DKtMvbIPYUcR947Kb3SnTtU2xhZ1ivknjcbNsJ0KOgKH4PjDsiVogeWn9a_npYSDlxn85jTCtUbog"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"source\":\"{{handle}}\",\n  \"target\":null,\n  \"symbol\":\"$tin\",\n  \"amount\":\"143000\",\n  \"labels\":{\n  \t\"tx_id\": \"1336\",\n  \t\"type\":\"SEND\",\n    \"description\":\"Prueba wallet existente\",\n    \"numberOfTransactions\": \"1\",\n    \"sourceChannel\": \"PSE\",\n    \"sourceCreated\": \"2019-08-23T20:21:01.284\",\n    \"transactionPurpose\": \"TRANSFER\",\n    \"received\": \"2025-04-01T12:29:57.442-05:00\",\n    \"dispatched\":\"2025-04-01T12:29:57.442-05:00\",\n  \t\"deviceFingerPrint\": {\n  \t\t\"hash\": \"0c6e845d-ee0f-47eb-bd71-5e9ef2224125\",\n        \"ipAddress\": \"190.242.46.190\",\n        \"geolocation\": \"DC\",\n        \"country\": \"Colombia\",\n        \"city\": \"Bogota\",\n        \"mobileDevice\": \"a7dd84ds8\",\n        \"SIMCardId\": \"aaabb\",\n        \"model\": \"samnsung\",\n        \"operator\": \"claro\"\n  \t}\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/transfer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"transfer"
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://ach-minka-stg.transferenciasinmediatas.com/v1/transfer' \\\n--header 'Content-Type: application/json' \\\n--header 'x-api-key: {{x-api-key}}' \\\n--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImNsaWVudElkIjoiMzc1N2U1ZTRiNzBkZmNkMzFkZjNjMTY3NDBhNzY5NjkiLCJvcmdhbml6YXRpb24iOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImRvbWFpbiI6IiR0aW4iLCJyZWFsbSI6Im9yZ2FuaXphdGlvbiIsInNjb3BlcyI6WyJtYW5hZ2Vfb3duX3Jlc291cmNlcyIsInJlYWQtYnVzaW5lc3Mtd2FsbGV0cyIsInJlYWQtbWVyY2hhbnQtd2FsbGV0cyJdLCJyb2xlcyI6WyJiYW5rLW93bmVyIiwiYnVzaW5lc3Mtb3duZXIiLCJidXNpbmVzcy1zcG9uc29yLWJhbmsiXSwiaWF0IjoxNzUyMDA3NjkyLCJleHAiOjE3NTIwMTEyOTIsImlzcyI6Imh0dHBzOi8vbWlua2EuaW8ifQ.LHUgq9xu6DKtMvbIPYUcR947Kb3SnTtU2xhZ1ivknjcbNsJ0KOgKH4PjDsiVogeWn9a_npYSDlxn85jTCtUbog' \\\n--data '{\n  \"source\":\"wXRZdCXQmeNTpFqyPiZqTonvUAaurT4HA7\",\n  \"target\":\"\",\n  \"symbol\":\"$tin\",\n  \"amount\":\"143000\",\n  \"labels\":{\n  \t\"tx_id\": \"1336\",\n  \t\"type\":\"SEND\",\n    \"description\":\"Prueba wallet existente\",\n    \"numberOfTransactions\": \"1\",\n    \"sourceChannel\": \"PSE\",\n    \"sourceCreated\": \"2019-08-23T20:21:01.284\",\n    \"transactionPurpose\": \"TRANSFER\",\n    \"received\": \"2025-04-01T12:29:57.442-05:00\",\n    \"dispatched\":\"2025-04-01T12:29:57.442-05:00\",\n  \t\"deviceFingerPrint\": {\n  \t\t\"hash\": \"0c6e845d-ee0f-47eb-bd71-5e9ef2224125\",\n        \"ipAddress\": \"190.242.46.190\",\n        \"geolocation\": \"DC\",\n        \"country\": \"Colombia\",\n        \"city\": \"Bogota\",\n        \"mobileDevice\": \"a7dd84ds8\",\n        \"SIMCardId\": \"aaabb\",\n        \"model\": \"samnsung\",\n        \"operator\": \"claro\"\n  \t}\n  }\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar Bankdomain",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImNsaWVudElkIjoiMzc1N2U1ZTRiNzBkZmNkMzFkZjNjMTY3NDBhNzY5NjkiLCJvcmdhbml6YXRpb24iOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImRvbWFpbiI6IiR0aW4iLCJyZWFsbSI6Im9yZ2FuaXphdGlvbiIsInNjb3BlcyI6WyJtYW5hZ2Vfb3duX3Jlc291cmNlcyIsInJlYWQtYnVzaW5lc3Mtd2FsbGV0cyIsInJlYWQtbWVyY2hhbnQtd2FsbGV0cyJdLCJyb2xlcyI6WyJiYW5rLW93bmVyIiwiYnVzaW5lc3Mtb3duZXIiLCJidXNpbmVzcy1zcG9uc29yLWJhbmsiXSwiaWF0IjoxNzUyMDA3NjkyLCJleHAiOjE3NTIwMTEyOTIsImlzcyI6Imh0dHBzOi8vbWlua2EuaW8ifQ.LHUgq9xu6DKtMvbIPYUcR947Kb3SnTtU2xhZ1ivknjcbNsJ0KOgKH4PjDsiVogeWn9a_npYSDlxn85jTCtUbog"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/wallet/$bancoamarillo",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"wallet",
+						"$bancoamarillo"
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://ach-minka-stg.transferenciasinmediatas.com/v1/transfer' \\\n--header 'Content-Type: application/json' \\\n--header 'x-api-key: {{x-api-key}}' \\\n--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImNsaWVudElkIjoiMzc1N2U1ZTRiNzBkZmNkMzFkZjNjMTY3NDBhNzY5NjkiLCJvcmdhbml6YXRpb24iOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImRvbWFpbiI6IiR0aW4iLCJyZWFsbSI6Im9yZ2FuaXphdGlvbiIsInNjb3BlcyI6WyJtYW5hZ2Vfb3duX3Jlc291cmNlcyIsInJlYWQtYnVzaW5lc3Mtd2FsbGV0cyIsInJlYWQtbWVyY2hhbnQtd2FsbGV0cyJdLCJyb2xlcyI6WyJiYW5rLW93bmVyIiwiYnVzaW5lc3Mtb3duZXIiLCJidXNpbmVzcy1zcG9uc29yLWJhbmsiXSwiaWF0IjoxNzUyMDA3NjkyLCJleHAiOjE3NTIwMTEyOTIsImlzcyI6Imh0dHBzOi8vbWlua2EuaW8ifQ.LHUgq9xu6DKtMvbIPYUcR947Kb3SnTtU2xhZ1ivknjcbNsJ0KOgKH4PjDsiVogeWn9a_npYSDlxn85jTCtUbog' \\\n--data '{\n  \"source\":\"wXRZdCXQmeNTpFqyPiZqTonvUAaurT4HA7\",\n  \"target\":\"\",\n  \"symbol\":\"$tin\",\n  \"amount\":\"143000\",\n  \"labels\":{\n  \t\"tx_id\": \"1336\",\n  \t\"type\":\"SEND\",\n    \"description\":\"Prueba wallet existente\",\n    \"numberOfTransactions\": \"1\",\n    \"sourceChannel\": \"PSE\",\n    \"sourceCreated\": \"2019-08-23T20:21:01.284\",\n    \"transactionPurpose\": \"TRANSFER\",\n    \"received\": \"2025-04-01T12:29:57.442-05:00\",\n    \"dispatched\":\"2025-04-01T12:29:57.442-05:00\",\n  \t\"deviceFingerPrint\": {\n  \t\t\"hash\": \"0c6e845d-ee0f-47eb-bd71-5e9ef2224125\",\n        \"ipAddress\": \"190.242.46.190\",\n        \"geolocation\": \"DC\",\n        \"country\": \"Colombia\",\n        \"city\": \"Bogota\",\n        \"mobileDevice\": \"a7dd84ds8\",\n        \"SIMCardId\": \"aaabb\",\n        \"model\": \"samnsung\",\n        \"operator\": \"claro\"\n  \t}\n  }\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear transferencia SENDMOL error 300",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImNsaWVudElkIjoiMzc1N2U1ZTRiNzBkZmNkMzFkZjNjMTY3NDBhNzY5NjkiLCJvcmdhbml6YXRpb24iOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImRvbWFpbiI6IiR0aW4iLCJyZWFsbSI6Im9yZ2FuaXphdGlvbiIsInNjb3BlcyI6WyJtYW5hZ2Vfb3duX3Jlc291cmNlcyIsInJlYWQtYnVzaW5lc3Mtd2FsbGV0cyIsInJlYWQtbWVyY2hhbnQtd2FsbGV0cyJdLCJyb2xlcyI6WyJiYW5rLW93bmVyIiwiYnVzaW5lc3Mtb3duZXIiLCJidXNpbmVzcy1zcG9uc29yLWJhbmsiXSwiaWF0IjoxNzUyMDA3NjkyLCJleHAiOjE3NTIwMTEyOTIsImlzcyI6Imh0dHBzOi8vbWlua2EuaW8ifQ.LHUgq9xu6DKtMvbIPYUcR947Kb3SnTtU2xhZ1ivknjcbNsJ0KOgKH4PjDsiVogeWn9a_npYSDlxn85jTCtUbog"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"source\":\"wiYb8FfdVfNpsTJEa4tRYZ2R13goNWkkMD\",\n  \"target\":\"weNaDyjmsqgyFquoJ7h4DFEqJhPBpiLf2m\",\n  \"symbol\":\"$tin\",\n  \"amount\":\"35000\",\n  \"labels\":{\n  \t\"tx_id\": \"1338\",\n  \t\"type\":\"SENDMOL\",\n    \"description\":\"prueba envio dinero\",\n    \"numberOfTransactions\": \"1\",\n    \"sourceChannel\": \"PSE\",\n    \"sourceCreated\": \"2019-08-23T20:21:01.284\",\n    \"transactionPurpose\": \"TRANSFER\",\n    \"received\": \"2025-07-29T13:00:28.942-05:00\",\n    \"dispatched\":\"{{fecha_actual_formato_iso}}\",\n  \t\"deviceFingerPrint\": {\n  \t\t\"hash\": \"26fff5af6441f8e15a71e8d62c361714484b1b308c99e8eb68ca85e2a7e0dc58\",\n        \"ipAddress\": \"190.242.46.190\",\n        \"geolocation\": \"DC\",\n        \"country\": \"Colombia\",\n        \"city\": \"Bogota\",\n        \"mobileDevice\": \"a7dd84ds8\",\n        \"SIMCardId\": \"aaabb\",\n        \"model\": \"samnsung\",\n        \"operator\": \"claro\"\n  \t}\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/transfer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"transfer"
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://ach-minka-stg.transferenciasinmediatas.com/v1/transfer' \\\n--header 'Content-Type: application/json' \\\n--header 'x-api-key: {{x-api-key}}' \\\n--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImNsaWVudElkIjoiMzc1N2U1ZTRiNzBkZmNkMzFkZjNjMTY3NDBhNzY5NjkiLCJvcmdhbml6YXRpb24iOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImRvbWFpbiI6IiR0aW4iLCJyZWFsbSI6Im9yZ2FuaXphdGlvbiIsInNjb3BlcyI6WyJtYW5hZ2Vfb3duX3Jlc291cmNlcyIsInJlYWQtYnVzaW5lc3Mtd2FsbGV0cyIsInJlYWQtbWVyY2hhbnQtd2FsbGV0cyJdLCJyb2xlcyI6WyJiYW5rLW93bmVyIiwiYnVzaW5lc3Mtb3duZXIiLCJidXNpbmVzcy1zcG9uc29yLWJhbmsiXSwiaWF0IjoxNzUyMDA3NjkyLCJleHAiOjE3NTIwMTEyOTIsImlzcyI6Imh0dHBzOi8vbWlua2EuaW8ifQ.LHUgq9xu6DKtMvbIPYUcR947Kb3SnTtU2xhZ1ivknjcbNsJ0KOgKH4PjDsiVogeWn9a_npYSDlxn85jTCtUbog' \\\n--data '{\n  \"source\":\"wXRZdCXQmeNTpFqyPiZqTonvUAaurT4HA7\",\n  \"target\":\"\",\n  \"symbol\":\"$tin\",\n  \"amount\":\"143000\",\n  \"labels\":{\n  \t\"tx_id\": \"1336\",\n  \t\"type\":\"SEND\",\n    \"description\":\"Prueba wallet existente\",\n    \"numberOfTransactions\": \"1\",\n    \"sourceChannel\": \"PSE\",\n    \"sourceCreated\": \"2019-08-23T20:21:01.284\",\n    \"transactionPurpose\": \"TRANSFER\",\n    \"received\": \"2025-04-01T12:29:57.442-05:00\",\n    \"dispatched\":\"2025-04-01T12:29:57.442-05:00\",\n  \t\"deviceFingerPrint\": {\n  \t\t\"hash\": \"0c6e845d-ee0f-47eb-bd71-5e9ef2224125\",\n        \"ipAddress\": \"190.242.46.190\",\n        \"geolocation\": \"DC\",\n        \"country\": \"Colombia\",\n        \"city\": \"Bogota\",\n        \"mobileDevice\": \"a7dd84ds8\",\n        \"SIMCardId\": \"aaabb\",\n        \"model\": \"samnsung\",\n        \"operator\": \"claro\"\n  \t}\n  }\n}'"
+			},
+			"response": []
+		}
+	]
+}

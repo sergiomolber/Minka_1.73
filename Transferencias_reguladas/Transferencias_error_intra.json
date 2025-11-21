@@ -1,0 +1,264 @@
+{
+	"info": {
+		"_postman_id": "aa192ab5-0584-43e4-862e-395e551db80b",
+		"name": "Errores transferencias MOL -Intra",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29460625",
+		"_collection_link": "https://red-satellite-829132.postman.co/workspace/minka-1.73~64d101f2-860b-49f9-9d5d-7726db261f1d/collection/29460625-aa192ab5-0584-43e4-862e-395e551db80b?action=share&source=collection_link&creator=29460625"
+	},
+	"item": [
+		{
+			"name": "Crear tx - Validar rechazos Intra",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const date = new Date();\r",
+							" \r",
+							"// Obtener componentes con ceros a la izquierda\r",
+							"function pad(num, size = 2) {\r",
+							"    return ('00' + num).slice(-size);\r",
+							"}\r",
+							" \r",
+							"// Obtener la zona horaria en formato -05:00\r",
+							"function getTimeZoneOffset(date) {\r",
+							"    const offset = -date.getTimezoneOffset(); // en minutos\r",
+							"    const sign = offset >= 0 ? '+' : '-';\r",
+							"    const hours = pad(Math.floor(Math.abs(offset) / 60));\r",
+							"    const minutes = pad(Math.abs(offset) % 60);\r",
+							"    return `${sign}${hours}:${minutes}`;\r",
+							"}\r",
+							" \r",
+							"const isoDate = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}.${pad(date.getMilliseconds(), 3)}${getTimeZoneOffset(date)}`;\r",
+							" \r",
+							"pm.environment.set(\"fecha_actual_formato_iso\", isoDate);\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							"// Obtener la fecha actual en formato YYYYMMDD\r",
+							"const today = new Date();\r",
+							"const yyyy = today.getFullYear();\r",
+							"const mm = String(today.getMonth() + 1).padStart(2, '0'); // Meses comienzan desde 0\r",
+							"const dd = String(today.getDate()).padStart(2, '0');\r",
+							"const datePart = `${yyyy}${mm}${dd}`;\r",
+							"\r",
+							"// Parte fija\r",
+							"const fixedPart = '900504002TFY200100211243';\r",
+							"\r",
+							"// Generar 3 dígitos variables (puedes cambiar esto por un contador si lo necesitas)\r",
+							"const randomDigits = String(Math.floor(Math.random() * 1000)).padStart(3, '0');\r",
+							"\r",
+							"// Combinar todo\r",
+							"const finalValue = `${datePart}${fixedPart}${randomDigits}`;\r",
+							"\r",
+							"// Guardar como variable global o de entorno\r",
+							"pm.environment.set(\"codigo_generado\", finalValue);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Convertir la respuesta en JSON\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"// Extraer tx_ref\r",
+							"let tx_ref = response.labels.tx_ref;\r",
+							"\r",
+							"// Guardar en una variable de entorno en Postman\r",
+							"pm.globals.set(\"tx_ref\", tx_ref);\r",
+							"\r",
+							"// Mostrar en la consola de Postman\r",
+							"console.log(\"tx_ref:\", tx_ref);\r",
+							"// Imprimir el comentario en la consola de Newman\r",
+							"console.log(\"Comentario del caso de prueba: \", pm.iterationData.get(\"comentario\"));\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"source\":\"{{source}}\",\n  \"target\":\"{{target}}\",\n  \"symbol\":\"$tin\",\n  \"amount\":\"{{amount}}\",\n  \"labels\":{\n  \t\"tx_id\": \"{{tx_id}}\",\n    \"idQr\": \"CO.COM.RED.TRXID1234567890123456789\",\n  \t\"type\":\"{{type}}\",\n    \"description\":\"dfdsfdsfds\",\n    \"numberOfTransactions\": \"1\",\n    \"sourceChannel\": \"APP\",\n    \"sourceCreated\": \"2019-08-23T20:21:01.284\",\n    \"transactionPurpose\": \"TRANSFER\",\n    \"received\": \"{{received}}\",\n    \"dispatched\":\"{{dispatched}}\",\n  \t\"deviceFingerPrint\": {\n  \t\t\"hash\": \"26fff5af6441f8e15a71e8d62c361714484b1b308c99e8eb68ca85e2a7e0dc58\",\n        \"ipAddress\": \"190.242.46.190\",\n        \"geolocation\": \"DC\",\n        \"country\": \"Colombia\",\n        \"city\": \"Bogota\",\n        \"mobileDevice\": \"a7dd84ds8\",\n        \"SIMCardId\": \"aaabb\",\n        \"model\": \"samnsung\",\n        \"operator\": \"claro\"\n  \t}\n  }\n}"
+				},
+				"url": {
+					"raw": "{{url}}/v1/transfer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"transfer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar tx rechazadas Intra",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parsear la respuesta JSON\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"// Obtener el campo status\r",
+							"let status = response.entities[0].status;\r",
+							"\r",
+							"// Mostrarlo en consola\r",
+							"console.log(\"Status recibido:\", status);\r",
+							"\r",
+							"// Validar si el estado es REJECT o ERROR\r",
+							"if (status === \"REJECT\" || status === \"ERROR\") {\r",
+							"    pm.test(\"❌ La transacción fue rechazada o fallida\", function () {\r",
+							"        pm.expect.fail(`Estado inválido: ${status}`);\r",
+							"    });\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/v1/transfer?labels.tx_ref={{tx_ref}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"transfer"
+					],
+					"query": [
+						{
+							"key": "labels.tx_ref",
+							"value": "{{tx_ref}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

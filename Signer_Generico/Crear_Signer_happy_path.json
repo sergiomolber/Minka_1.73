@@ -1,0 +1,568 @@
+{
+	"info": {
+		"_postman_id": "a11702b5-c490-4663-9f82-56fd19555643",
+		"name": "Crear Signer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29460625",
+		"_collection_link": "https://red-satellite-829132.postman.co/workspace/minka-1.73~64d101f2-860b-49f9-9d5d-7726db261f1d/collection/29460625-a11702b5-c490-4663-9f82-56fd19555643?action=share&source=collection_link&creator=29460625"
+	},
+	"item": [
+		{
+			"name": "Crear  Signer generico banco rojo",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const randomCel = _.random(3102047071,3992047071)\r",
+							"pm.variables.set(\"randomCel\", randomCel );\r",
+							"// Genera un valor aleatorio\r",
+							"let randomValue = Math.random();\r",
+							"\r",
+							"// Generar número aleatorio de 12 dígitos\r",
+							"let identificacion = Math.floor(Math.random() * 9e11 + 1e11).toString() + Math.floor(Math.random() * 1e3).toString().padStart(3, '0');\r",
+							"\r",
+							"// Guardar como variable de entorno\r",
+							"pm.environment.set(\"identificacion\", identificacion);\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Generar una parte aleatoria para el nombre del correo\r",
+							"function generateRandomString(length) {\r",
+							"    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';\r",
+							"    let result = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        result += characters.charAt(Math.floor(Math.random() * characters.length));\r",
+							"    }\r",
+							"    return result;\r",
+							"}\r",
+							"\r",
+							"// Configurar el dominio del correo\r",
+							"const domain = 'example.com'; // Cambia este dominio si necesitas otro\r",
+							"const randomLocalPart = generateRandomString(8); // Parte local del correo (antes del @)\r",
+							"\r",
+							"// Generar el correo completo\r",
+							"const randomEmail = `${randomLocalPart}@${domain}`;\r",
+							"\r",
+							"// Guardar el correo en variables de entorno o colección\r",
+							"pm.environment.set('randomEmail', randomEmail);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Generar una cadena aleatoria de 10 caracteres para el campo ALFANUMERICO\r",
+							"function generateRandomString(length) {\r",
+							"    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+							"    let result = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        result += characters.charAt(Math.floor(Math.random() * characters.length));\r",
+							"    }\r",
+							"    return result;\r",
+							"}\r",
+							"\r",
+							"// Crear la variable\r",
+							"const alfanumerico = `@${generateRandomString(10)}`;\r",
+							"pm.environment.set('alfanumerico', alfanumerico);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Generar una cadena de 8 dígitos aleatorios para el campo MERCHANTID\r",
+							"function generateRandomDigits(length) {\r",
+							"    let result = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        result += Math.floor(Math.random() * 10); // Generar un dígito aleatorio entre 0 y 9\r",
+							"    }\r",
+							"    return result;\r",
+							"}\r",
+							"\r",
+							"// Crear la variable con prefijo '00'\r",
+							"const merchant = `00${generateRandomDigits(8)}`;\r",
+							"pm.environment.set('merchant', merchant);\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Función para generar una cadena aleatoria de dígitos de longitud especificada para el campo NUMERO DE CUENTA\r",
+							"function generateRandomNumericString(length) {\r",
+							"    const charset = '0123456789';  // Conjunto de caracteres numéricos\r",
+							"    let randomString = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        const randomIndex = Math.floor(Math.random() * charset.length);\r",
+							"        randomString += charset[randomIndex];\r",
+							"    }\r",
+							"    return randomString;\r",
+							"}\r",
+							"\r",
+							"// Genera un valor aleatorio de 34 dígitos\r",
+							"const randomNumericValue = generateRandomNumericString(34);\r",
+							"\r",
+							"// Establece el valor aleatorio en una variable\r",
+							"pm.variables.set(\"randomNumericValue\", randomNumericValue);\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Obtener la fecha actual\r",
+							"const date = new Date();\r",
+							" \r",
+							"// Obtener componentes con ceros a la izquierda\r",
+							"function pad(num, size = 2) {\r",
+							"    return ('00' + num).slice(-size);\r",
+							"}\r",
+							" \r",
+							"// Obtener la zona horaria en formato -05:00\r",
+							"function getTimeZoneOffset(date) {\r",
+							"    const offset = -date.getTimezoneOffset(); // en minutos\r",
+							"    const sign = offset >= 0 ? '+' : '-';\r",
+							"    const hours = pad(Math.floor(Math.abs(offset) / 60));\r",
+							"    const minutes = pad(Math.abs(offset) % 60);\r",
+							"    return `${sign}${hours}:${minutes}`;\r",
+							"}\r",
+							" \r",
+							"const isoDate = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}.${pad(date.getMilliseconds(), 3)}${getTimeZoneOffset(date)}`;\r",
+							" \r",
+							"pm.environment.set(\"fecha_actual_formato_iso\", isoDate);\r",
+							"\r",
+							"\r",
+							"//GENERAR TOKEN\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"{\r",
+							"    pm.test(\"Status debe ser 200 OK\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"}\r",
+							"// Parsear la respuesta JSON\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"// Capturar los valores deseados\r",
+							"let aliasValue = response.labels.aliasValue;\r",
+							"let dispatched = response.labels.dispatched;\r",
+							"let received = response.labels.received;\r",
+							"\r",
+							"// Guardar en variables de entorno o colección\r",
+							"pm.environment.set(\"aliasValue\", aliasValue);\r",
+							"pm.environment.set(\"dispatched\", dispatched);\r",
+							"pm.environment.set(\"received\", received);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"tlsDisabledProtocols": []
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"labels\": {     \n        \"type\": \"GENERIC\",     \n        \"name\": \"{{$randomCompanyName}}\",\n        \"proprietary\": \"NIT\",\n        \"identification\": \"9005040020\",\n        \"routerReference\": \"$bancorojo\",     \n        \"bankId\": \"900504002\"\n   }\n}\n\n"
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear  Signer generico banco Amarilllo",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const randomCel = _.random(3102047071,3992047071)\r",
+							"pm.variables.set(\"randomCel\", randomCel );\r",
+							"// Genera un valor aleatorio\r",
+							"let randomValue = Math.random();\r",
+							"\r",
+							"// Generar número aleatorio de 12 dígitos\r",
+							"let identificacion = Math.floor(Math.random() * 9e11 + 1e11).toString() + Math.floor(Math.random() * 1e3).toString().padStart(3, '0');\r",
+							"\r",
+							"// Guardar como variable de entorno\r",
+							"pm.environment.set(\"identificacion\", identificacion);\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Generar una parte aleatoria para el nombre del correo\r",
+							"function generateRandomString(length) {\r",
+							"    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';\r",
+							"    let result = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        result += characters.charAt(Math.floor(Math.random() * characters.length));\r",
+							"    }\r",
+							"    return result;\r",
+							"}\r",
+							"\r",
+							"// Configurar el dominio del correo\r",
+							"const domain = 'example.com'; // Cambia este dominio si necesitas otro\r",
+							"const randomLocalPart = generateRandomString(8); // Parte local del correo (antes del @)\r",
+							"\r",
+							"// Generar el correo completo\r",
+							"const randomEmail = `${randomLocalPart}@${domain}`;\r",
+							"\r",
+							"// Guardar el correo en variables de entorno o colección\r",
+							"pm.environment.set('randomEmail', randomEmail);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Generar una cadena aleatoria de 10 caracteres para el campo ALFANUMERICO\r",
+							"function generateRandomString(length) {\r",
+							"    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+							"    let result = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        result += characters.charAt(Math.floor(Math.random() * characters.length));\r",
+							"    }\r",
+							"    return result;\r",
+							"}\r",
+							"\r",
+							"// Crear la variable\r",
+							"const alfanumerico = `@${generateRandomString(10)}`;\r",
+							"pm.environment.set('alfanumerico', alfanumerico);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Generar una cadena de 8 dígitos aleatorios para el campo MERCHANTID\r",
+							"function generateRandomDigits(length) {\r",
+							"    let result = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        result += Math.floor(Math.random() * 10); // Generar un dígito aleatorio entre 0 y 9\r",
+							"    }\r",
+							"    return result;\r",
+							"}\r",
+							"\r",
+							"// Crear la variable con prefijo '00'\r",
+							"const merchant = `00${generateRandomDigits(8)}`;\r",
+							"pm.environment.set('merchant', merchant);\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Función para generar una cadena aleatoria de dígitos de longitud especificada para el campo NUMERO DE CUENTA\r",
+							"function generateRandomNumericString(length) {\r",
+							"    const charset = '0123456789';  // Conjunto de caracteres numéricos\r",
+							"    let randomString = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        const randomIndex = Math.floor(Math.random() * charset.length);\r",
+							"        randomString += charset[randomIndex];\r",
+							"    }\r",
+							"    return randomString;\r",
+							"}\r",
+							"\r",
+							"// Genera un valor aleatorio de 34 dígitos\r",
+							"const randomNumericValue = generateRandomNumericString(34);\r",
+							"\r",
+							"// Establece el valor aleatorio en una variable\r",
+							"pm.variables.set(\"randomNumericValue\", randomNumericValue);\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Obtener la fecha actual\r",
+							"const date = new Date();\r",
+							" \r",
+							"// Obtener componentes con ceros a la izquierda\r",
+							"function pad(num, size = 2) {\r",
+							"    return ('00' + num).slice(-size);\r",
+							"}\r",
+							" \r",
+							"// Obtener la zona horaria en formato -05:00\r",
+							"function getTimeZoneOffset(date) {\r",
+							"    const offset = -date.getTimezoneOffset(); // en minutos\r",
+							"    const sign = offset >= 0 ? '+' : '-';\r",
+							"    const hours = pad(Math.floor(Math.abs(offset) / 60));\r",
+							"    const minutes = pad(Math.abs(offset) % 60);\r",
+							"    return `${sign}${hours}:${minutes}`;\r",
+							"}\r",
+							" \r",
+							"const isoDate = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}.${pad(date.getMilliseconds(), 3)}${getTimeZoneOffset(date)}`;\r",
+							" \r",
+							"pm.environment.set(\"fecha_actual_formato_iso\", isoDate);\r",
+							"\r",
+							"\r",
+							"//GENERAR TOKEN\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"{\r",
+							"    pm.test(\"Status debe ser 200 OK\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"}\r",
+							"// Parsear la respuesta JSON\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"// Capturar los valores deseados\r",
+							"let aliasValue = response.labels.aliasValue;\r",
+							"let dispatched = response.labels.dispatched;\r",
+							"let received = response.labels.received;\r",
+							"\r",
+							"// Guardar en variables de entorno o colección\r",
+							"pm.environment.set(\"aliasValue\", aliasValue);\r",
+							"pm.environment.set(\"dispatched\", dispatched);\r",
+							"pm.environment.set(\"received\", received);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"tlsDisabledProtocols": []
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"labels\": {     \n        \"type\": \"GENERIC\",     \n        \"name\": \"{{$randomCompanyName}}\",\n        \"proprietary\": \"NIT\",\n        \"identification\": \"9005040020\",\n        \"routerReference\": \"$bancoamarillo\",     \n        \"bankId\": \"900504001\"\n   }\n}\n\n"
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear signer tipo cuenta Amarillo",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//GENERAR TOKEN\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"let aliasValue = response.labels.aliasValue;\r",
+							"\r",
+							"pm.environment.set(\"aliasValue\", aliasValue);\r",
+							"console.log(\"Alias Value guardado:\", aliasValue);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "<API_KEY>"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImNsaWVudElkIjoiMzc1N2U1ZTRiNzBkZmNkMzFkZjNjMTY3NDBhNzY5NjkiLCJvcmdhbml6YXRpb24iOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImRvbWFpbiI6IiR0aW4iLCJyZWFsbSI6Im9yZ2FuaXphdGlvbiIsInNjb3BlcyI6WyJtYW5hZ2Vfb3duX3Jlc291cmNlcyIsInJlYWQtYnVzaW5lc3Mtd2FsbGV0cyIsInJlYWQtbWVyY2hhbnQtd2FsbGV0cyJdLCJyb2xlcyI6WyJiYW5rLW93bmVyIiwiYnVzaW5lc3Mtb3duZXIiLCJidXNpbmVzcy1zcG9uc29yLWJhbmsiXSwiYmFua0lkIjoiOTAwNTA0MDAyIiwiaWF0IjoxNzYyODgxMjMzLCJleHAiOjE3NjI4ODQ4MzMsImlzcyI6Imh0dHBzOi8vbWlua2EuaW8ifQ.mNsa45UMkNE16vVLKdhod0L3dTmUbBhLzSW377LK2nmWhykrLPjdgWmToGKr09gba9xLqPRZzuJHunjmLp_i3w"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"labels\": {\n\"aliasType\": \"ACCOUNT\",\n\"aliasValue\": \"DORD:{{$randomPhoneNumber}}@3854\",\n\"type\": \"BUSINESS\",\n\"Name\": \"{{$randomCompanyName}}\",\n\"proprietary\": \"NIT\",\n\"identification\": \"90050400221\",\n\"bankAccountType\": \"DORD\",\n\"bankAccountNumber\": \"123456789\",\n\"routerReference\": \"$bancoamarillo\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer"
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://ach-minka-stg.transferenciasinmediatas.com/v1/signer' \\\n--header 'x-api-key: <API_KEY>' \\\n--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImNsaWVudElkIjoiMzc1N2U1ZTRiNzBkZmNkMzFkZjNjMTY3NDBhNzY5NjkiLCJvcmdhbml6YXRpb24iOiJsVG1CRXVJNnVodmRBTmlIOWppMyIsImRvbWFpbiI6IiR0aW4iLCJyZWFsbSI6Im9yZ2FuaXphdGlvbiIsInNjb3BlcyI6WyJtYW5hZ2Vfb3duX3Jlc291cmNlcyIsInJlYWQtYnVzaW5lc3Mtd2FsbGV0cyIsInJlYWQtbWVyY2hhbnQtd2FsbGV0cyJdLCJyb2xlcyI6WyJiYW5rLW93bmVyIiwiYnVzaW5lc3Mtb3duZXIiLCJidXNpbmVzcy1zcG9uc29yLWJhbmsiXSwiYmFua0lkIjoiOTAwNTA0MDAyIiwiaWF0IjoxNzYyODgxMjMzLCJleHAiOjE3NjI4ODQ4MzMsImlzcyI6Imh0dHBzOi8vbWlua2EuaW8ifQ.mNsa45UMkNE16vVLKdhod0L3dTmUbBhLzSW377LK2nmWhykrLPjdgWmToGKr09gba9xLqPRZzuJHunjmLp_i3w' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n\"labels\": {\n\"aliasType\": \"ACCOUNT\",\n\"aliasValue\": \"cacc:12345678346456456666666666666666666666666666666666666666666666666666666666666666666666666666666666@7095\",\n\"type\": \"BUSINESS\",\n\"Name\": \"BUSINESS 3\",\n\"proprietary\": \"NIT\",\n\"identification\": \"9005040021\",\n\"bankAccountType\": \"CACC\",\n\"bankAccountNumber\": \"123456789\",\n\"routerReference\": \"$bancorojo\"\n    }\n}'"
+			},
+			"response": []
+		}
+	]
+}

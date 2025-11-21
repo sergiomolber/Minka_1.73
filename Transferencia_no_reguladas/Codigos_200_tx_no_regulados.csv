@@ -1,0 +1,15 @@
+source,target,type,received,dispatched,sourceChannel,comentario
+$573185222222,wXRZdCXQmeNTpFqyPiZqTonvUAaurT4HA7,SEND,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},APP,Validar la creacion de tx tipo REQUEST de forma correcta
+$573185222222,wXRZdCXQmeNTpFqyPiZqTonvUAaurT4HA7,REQUEST,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},APP,Validar la creacion de tx tipo REQUEST de forma correcta entre no regulados
+wXZaWUd8wW2aD787F2aLvfn39GPnAeFFHZ,$573185222223,SEND,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},APP,Unico signer - acreditación en línea
+wXZaWUd8wW2aD787F2aLvfn39GPnAeFFHZ,$573185222222,SEND,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},APP,Varios signers - queda pendiente
+wXZaWUd8wW2aD787F2aLvfn39GPnAeFFHZ,{{PHONE}},SEND,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},APP,Signer alias celular - acreditación en línea
+$573185222222,wXRZdCXQmeNTpFqyPiZqTonvUAaurT4HA7,REQUEST,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},APP,Pendiente por aceptación tipo request
+wMg2MfNugWhm68fYpKRKoUkeKEDNY6gGMa,wee6y56w6iB9htXsyXwTJNggfxj9csAwwx,SEND,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},APP,Crear la transaccion con llave regulada y no regulada de diferente banco
+wMg2MfNugWhm68fYpKRKoUkeKEDNY6gGMa,wXS3CTo9JcDRdBQ2dBE1JqcG5E76gkFLnE,SEND,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},APP,Crear la transaccion con llave regulada y no regulada del mismo banco
+wMg2MfNugWhm68fYpKRKoUkeKEDNY6gGMa,wee6y56w6iB9htXsyXwTJNggfxj9csAwwx,SEND,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},APP,Crear la transaccion con llave regulada y no regulada de diferente banco
+wMg2MfNugWhm68fYpKRKoUkeKEDNY6gGMa,wXS3CTo9JcDRdBQ2dBE1JqcG5E76gkFLnE,SEND,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},PSE,Validar una transferencia con sourse channel PSE tipo SEND quede completada
+wMg2MfNugWhm68fYpKRKoUkeKEDNY6gGMa,wXS3CTo9JcDRdBQ2dBE1JqcG5E76gkFLnE,SEND,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},PSEQR,Validar una transferencia con sourse channel PSEQR tipo SEND quede completada
+wMg2MfNugWhm68fYpKRKoUkeKEDNY6gGMa,wXS3CTo9JcDRdBQ2dBE1JqcG5E76gkFLnE,REQUEST,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},PSERFP,Validar una transferencia con sourse channel PSERFP tipo REQUEST quede completada
+wMg2MfNugWhm68fYpKRKoUkeKEDNY6gGMa,wXS3CTo9JcDRdBQ2dBE1JqcG5E76gkFLnE,REQUEST,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},POS,Validar una transferencia con sourse channel POS tipo REQUEST quede completada
+wMg2MfNugWhm68fYpKRKoUkeKEDNY6gGMa,wXS3CTo9JcDRdBQ2dBE1JqcG5E76gkFLnE,SEND,{{fecha_actual_formato_iso}},{{fecha_actual_formato_iso}},FILE,Validar una transferencia con sourse channel FILE tipo SEND quede completada 

@@ -1,0 +1,1577 @@
+{
+	"info": {
+		"_postman_id": "c6295ca3-7fb0-4838-99e0-94b60e9ee724",
+		"name": "Consultar llaves-",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29460625",
+		"_collection_link": "https://red-satellite-829132.postman.co/workspace/MINKA-FASE-2~0b289b12-251d-435b-869e-33b7b107018f/collection/29460625-c6295ca3-7fb0-4838-99e0-94b60e9ee724?action=share&source=collection_link&creator=29460625"
+	},
+	"item": [
+		{
+			"name": "Crear llave correctamente",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const randomCel = _.random(3102047071,3992047071)\r",
+							"pm.globals.set(\"randomCel\", randomCel );\r",
+							"// Genera un valor aleatorio\r",
+							"let randomValue = Math.random();\r",
+							"\r",
+							"// Generar número aleatorio de 12 dígitos\r",
+							"let identificacion = Math.floor(Math.random() * 9e11 + 1e11).toString() + Math.floor(Math.random() * 1e3).toString().padStart(3, '0');\r",
+							"\r",
+							"// Guardar como variable de entorno\r",
+							"pm.environment.set(\"identificacion\", identificacion);\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Generar una parte aleatoria para el nombre del correo\r",
+							"function generateRandomString(length) {\r",
+							"    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';\r",
+							"    let result = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        result += characters.charAt(Math.floor(Math.random() * characters.length));\r",
+							"    }\r",
+							"    return result;\r",
+							"}\r",
+							"\r",
+							"// Configurar el dominio del correo\r",
+							"const domain = 'example.com'; // Cambia este dominio si necesitas otro\r",
+							"const randomLocalPart = generateRandomString(8); // Parte local del correo (antes del @)\r",
+							"\r",
+							"// Generar el correo completo\r",
+							"const randomEmail = `${randomLocalPart}@${domain}`;\r",
+							"\r",
+							"// Guardar el correo en variables de entorno o colección\r",
+							"pm.environment.set('randomEmail', randomEmail);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Generar una cadena aleatoria de 10 caracteres para el campo ALFANUMERICO\r",
+							"function generateRandomString(length) {\r",
+							"    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+							"    let result = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        result += characters.charAt(Math.floor(Math.random() * characters.length));\r",
+							"    }\r",
+							"    return result;\r",
+							"}\r",
+							"\r",
+							"// Crear la variable\r",
+							"const alfanumerico = `@${generateRandomString(10)}`;\r",
+							"pm.environment.set('alfanumerico', alfanumerico);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Generar una cadena de 8 dígitos aleatorios para el campo MERCHANTID\r",
+							"function generateRandomDigits(length) {\r",
+							"    let result = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        result += Math.floor(Math.random() * 10); // Generar un dígito aleatorio entre 0 y 9\r",
+							"    }\r",
+							"    return result;\r",
+							"}\r",
+							"\r",
+							"// Crear la variable con prefijo '00'\r",
+							"const merchant = `00${generateRandomDigits(8)}`;\r",
+							"pm.environment.set('merchant', merchant);\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Función para generar una cadena aleatoria de dígitos de longitud especificada para el campo NUMERO DE CUENTA\r",
+							"function generateRandomNumericString(length) {\r",
+							"    const charset = '0123456789';  // Conjunto de caracteres numéricos\r",
+							"    let randomString = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        const randomIndex = Math.floor(Math.random() * charset.length);\r",
+							"        randomString += charset[randomIndex];\r",
+							"    }\r",
+							"    return randomString;\r",
+							"}\r",
+							"\r",
+							"// Genera un valor aleatorio de 34 dígitos\r",
+							"const randomNumericValue = generateRandomNumericString(34);\r",
+							"\r",
+							"// Establece el valor aleatorio en una variable\r",
+							"pm.variables.set(\"randomNumericValue\", randomNumericValue);\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Obtener la fecha actual\r",
+							"const date = new Date();\r",
+							" \r",
+							"// Obtener componentes con ceros a la izquierda\r",
+							"function pad(num, size = 2) {\r",
+							"    return ('00' + num).slice(-size);\r",
+							"}\r",
+							" \r",
+							"// Obtener la zona horaria en formato -05:00\r",
+							"function getTimeZoneOffset(date) {\r",
+							"    const offset = -date.getTimezoneOffset(); // en minutos\r",
+							"    const sign = offset >= 0 ? '+' : '-';\r",
+							"    const hours = pad(Math.floor(Math.abs(offset) / 60));\r",
+							"    const minutes = pad(Math.abs(offset) % 60);\r",
+							"    return `${sign}${hours}:${minutes}`;\r",
+							"}\r",
+							" \r",
+							"const isoDate = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}.${pad(date.getMilliseconds(), 3)}${getTimeZoneOffset(date)}`;\r",
+							" \r",
+							"pm.environment.set(\"fecha_actual_formato_iso\", isoDate);\r",
+							"\r",
+							"\r",
+							"//GENERAR TOKEN\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"{\r",
+							"    pm.test(\"Status debe ser 200 OK\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"}\r",
+							"// Parsear la respuesta JSON\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"// Capturar los valores deseados\r",
+							"let aliasValue = response.labels.aliasValue;\r",
+							"let dispatched = response.labels.dispatched;\r",
+							"let received = response.labels.received;\r",
+							"\r",
+							"// Guardar en variables de entorno o colección\r",
+							"pm.environment.set(\"aliasValue\", aliasValue);\r",
+							"pm.environment.set(\"dispatched\", dispatched);\r",
+							"pm.environment.set(\"received\", received);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"labels\": {\n    \"aliasType\": \"PHONE\",\n    \"aliasValue\": \"{{randomCel}}\",\n     \"type\": \"PERSON\",\n     \"firstName\": \"manuel\",\n     \"secondName\": \"Manue\",\n     \"lastName\": \"Diaz\",\n     \"secondLastName\": \"POLANCO\",\n     \"proprietary\": \"CC\",\n     \"identification\": \"11111111\",\n     \"bankAccountType\": \"DBMO\",\n     \"bankAccountNumber\": \"123456543212325421334\",\n     \"routerReference\": \"$bancorojo\",\n     \"targetSpbviCode\": \"TFY\",\n     \"bankId\": \"900504001\",\n     \"consented\": \"{{fecha_actual_formato_iso}}\"\n    ,\n         \"received\": \"{{fecha_actual_formato_iso}}\",\n         \"dispatched\":\"{{fecha_actual_formato_iso}}\"\n   }\n}"
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar llaves",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"//GENERAR TOKEN\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer <token>"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"aliasValue\": \"{{aliasValue}}\",\r\n\"dispatched\": \"2025-05-21T10:46:22.528-05:00\",\r\n\"received\": \"2025-05-21T10:46:22.528-05:00\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer/lookup.dice",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer",
+						"lookup.dice"
+					]
+				},
+				"description": "Generated from cURL: curl --location '{{url}}/v1/signer/lookup.dice' \\\r\n--header 'Content-Type: application/json' \\\r\n--header 'Authorization: Bearer <token>' \\\r\n--data-raw '{\r\n\"aliasValue\": \"@testing\",\r\n\"received\": \"2025-04-10T15:49:15.015-05:00\",\r\n\"dispatched\": \"2025-04-10T15:49:15.015-05:00\"\r\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar llaves no existente",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"//GENERAR TOKEN\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer <token>"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"aliasValue\": \"{{aliasVal2ue}}\",\r\n\"received\": \"{{received}}\",\r\n\"dispatched\": \"{{dispatched}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer/lookup.dice",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer",
+						"lookup.dice"
+					]
+				},
+				"description": "Generated from cURL: curl --location '{{url}}/v1/signer/lookup.dice' \\\r\n--header 'Content-Type: application/json' \\\r\n--header 'Authorization: Bearer <token>' \\\r\n--data-raw '{\r\n\"aliasValue\": \"@testing\",\r\n\"received\": \"2025-04-10T15:49:15.015-05:00\",\r\n\"dispatched\": \"2025-04-10T15:49:15.015-05:00\"\r\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Create llave para cancelar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"{\r",
+							"    pm.test(\"Status debe ser 200 OK\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"}\r",
+							"// Parsear la respuesta JSON\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"// Capturar los valores deseados\r",
+							"let aliasValue = response.labels.aliasValue;\r",
+							"let dispatched = response.labels.dispatched;\r",
+							"let received = response.labels.received;\r",
+							"\r",
+							"// Guardar en variables de entorno o colección\r",
+							"pm.environment.set(\"aliasValue\", aliasValue);\r",
+							"pm.environment.set(\"dispatched\", dispatched);\r",
+							"pm.environment.set(\"received\", received);\r",
+							"\r",
+							"\r",
+							"pm.test(\"Extraer handle\", function () {\r",
+							"    let response = pm.response.json(); // Parsear la respuesta como JSON\r",
+							"    pm.environment.set(\"handle\", response.handle); // Guardar el valor en una variable de entorno\r",
+							"    console.log(\"Handle capturado:\", response.handle);});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const randomCel = _.random(3102047071,3992047071)\r",
+							"pm.variables.set(\"randomCel\", randomCel );\r",
+							"// Genera un valor aleatorio\r",
+							"let randomValue = Math.random();\r",
+							"\r",
+							"// Generar número aleatorio de 12 dígitos\r",
+							"let identificacion = Math.floor(Math.random() * 9e11 + 1e11).toString() + Math.floor(Math.random() * 1e3).toString().padStart(3, '0');\r",
+							"\r",
+							"// Guardar como variable de entorno\r",
+							"pm.environment.set(\"identificacion\", identificacion);\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Generar una parte aleatoria para el nombre del correo\r",
+							"function generateRandomString(length) {\r",
+							"    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';\r",
+							"    let result = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        result += characters.charAt(Math.floor(Math.random() * characters.length));\r",
+							"    }\r",
+							"    return result;\r",
+							"}\r",
+							"\r",
+							"// Configurar el dominio del correo\r",
+							"const domain = 'example.com'; // Cambia este dominio si necesitas otro\r",
+							"const randomLocalPart = generateRandomString(8); // Parte local del correo (antes del @)\r",
+							"\r",
+							"// Generar el correo completo\r",
+							"const randomEmail = `${randomLocalPart}@${domain}`;\r",
+							"\r",
+							"// Guardar el correo en variables de entorno o colección\r",
+							"pm.environment.set('randomEmail', randomEmail);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Generar una cadena aleatoria de 10 caracteres para el campo ALFANUMERICO\r",
+							"function generateRandomString(length) {\r",
+							"    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+							"    let result = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        result += characters.charAt(Math.floor(Math.random() * characters.length));\r",
+							"    }\r",
+							"    return result;\r",
+							"}\r",
+							"\r",
+							"// Crear la variable\r",
+							"const alfanumerico = `@${generateRandomString(10)}`;\r",
+							"pm.environment.set('alfanumerico', alfanumerico);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Generar una cadena de 8 dígitos aleatorios para el campo MERCHANTID\r",
+							"function generateRandomDigits(length) {\r",
+							"    let result = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        result += Math.floor(Math.random() * 10); // Generar un dígito aleatorio entre 0 y 9\r",
+							"    }\r",
+							"    return result;\r",
+							"}\r",
+							"\r",
+							"// Crear la variable con prefijo '00'\r",
+							"const merchant = `00${generateRandomDigits(8)}`;\r",
+							"pm.environment.set('merchant', merchant);\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Función para generar una cadena aleatoria de dígitos de longitud especificada para el campo NUMERO DE CUENTA\r",
+							"function generateRandomNumericString(length) {\r",
+							"    const charset = '0123456789';  // Conjunto de caracteres numéricos\r",
+							"    let randomString = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        const randomIndex = Math.floor(Math.random() * charset.length);\r",
+							"        randomString += charset[randomIndex];\r",
+							"    }\r",
+							"    return randomString;\r",
+							"}\r",
+							"\r",
+							"// Genera un valor aleatorio de 34 dígitos\r",
+							"const randomNumericValue = generateRandomNumericString(34);\r",
+							"\r",
+							"// Establece el valor aleatorio en una variable\r",
+							"pm.variables.set(\"randomNumericValue\", randomNumericValue);\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Obtener la fecha actual\r",
+							"const date = new Date();\r",
+							" \r",
+							"// Obtener componentes con ceros a la izquierda\r",
+							"function pad(num, size = 2) {\r",
+							"    return ('00' + num).slice(-size);\r",
+							"}\r",
+							" \r",
+							"// Obtener la zona horaria en formato -05:00\r",
+							"function getTimeZoneOffset(date) {\r",
+							"    const offset = -date.getTimezoneOffset(); // en minutos\r",
+							"    const sign = offset >= 0 ? '+' : '-';\r",
+							"    const hours = pad(Math.floor(Math.abs(offset) / 60));\r",
+							"    const minutes = pad(Math.abs(offset) % 60);\r",
+							"    return `${sign}${hours}:${minutes}`;\r",
+							"}\r",
+							" \r",
+							"const isoDate = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}.${pad(date.getMilliseconds(), 3)}${getTimeZoneOffset(date)}`;\r",
+							" \r",
+							"pm.environment.set(\"fecha_actual_formato_iso\", isoDate);\r",
+							"\r",
+							"\r",
+							"//GENERAR TOKEN\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"//GENERAR TOKEN\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"labels\": {\n   \"aliasType\": \"MERCHANT\",\n    \"aliasValue\": \"0064125313\",\n     \"type\": \"BUSINESS\",\n     \"name\": \"APROBANDO 32\",\n     \"proprietary\": \"NIT\",\n\t   \"identification\": \"1010101010\",\n     \"bankAccountType\": \"DBMI\",\n\t   \"bankAccountNumber\": \"12345654321\",\n\t\t \"countryOfResidence\": \"CO\",\n\t   \"bankBicfi\": \"7095\",\n\t\t \"bankName\": \"Banco Rojo\",\n\t\t \"routerReference\": \"$bancorojo\",\n    \"targetSpbviCode\":\"TFY\",\n\t \"bankId\": \"900504001\" ,\n     \"consented\": \"{{fecha_actual_formato_iso}}\"\n    ,\n         \"received\": \"{{fecha_actual_formato_iso}}\",\n         \"dispatched\":\"{{fecha_actual_formato_iso}}\" \n    \n   }\n}"
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancelar llave correctamente",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"//GENERAR TOKEN\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer <token>"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"labels\": { \r\n\t  \"status\": \"INACTIVE\",\r\n        \"allowImmediateReuse\":false\r\n   }\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer/{{handle}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer",
+						"{{handle}}"
+					]
+				},
+				"description": "Generated from cURL: curl --location '{{url}}/v1/signer/lookup.dice' \\\r\n--header 'Content-Type: application/json' \\\r\n--header 'Authorization: Bearer <token>' \\\r\n--data-raw '{\r\n\"aliasValue\": \"@testing\",\r\n\"received\": \"2025-04-10T15:49:15.015-05:00\",\r\n\"dispatched\": \"2025-04-10T15:49:15.015-05:00\"\r\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar llave cancelada",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//GENERAR TOKEN\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer <token>"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"aliasValue\": \"0064125313\",\r\n\"received\": \"{{received}}\",\r\n\"dispatched\": \"{{dispatched}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer/lookup.dice",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer",
+						"lookup.dice"
+					]
+				},
+				"description": "Generated from cURL: curl --location '{{url}}/v1/signer/lookup.dice' \\\r\n--header 'Content-Type: application/json' \\\r\n--header 'Authorization: Bearer <token>' \\\r\n--data-raw '{\r\n\"aliasValue\": \"@testing\",\r\n\"received\": \"2025-04-10T15:49:15.015-05:00\",\r\n\"dispatched\": \"2025-04-10T15:49:15.015-05:00\"\r\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Reutilizar llave ya cancelada",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"{\r",
+							"    pm.test(\"Status debe ser 200 OK\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"}\r",
+							"// Parsear la respuesta JSON\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"// Capturar los valores deseados\r",
+							"let aliasValue = response.labels.aliasValue;\r",
+							"let dispatched = response.labels.dispatched;\r",
+							"let received = response.labels.received;\r",
+							"\r",
+							"// Guardar en variables de entorno o colección\r",
+							"pm.environment.set(\"aliasValue\", aliasValue);\r",
+							"pm.environment.set(\"dispatched\", dispatched);\r",
+							"pm.environment.set(\"received\", received);\r",
+							"\r",
+							"\r",
+							"pm.test(\"Extraer handle\", function () {\r",
+							"    let response = pm.response.json(); // Parsear la respuesta como JSON\r",
+							"    pm.environment.set(\"handle\", response.handle); // Guardar el valor en una variable de entorno\r",
+							"    console.log(\"Handle capturado:\", response.handle);});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"//GENERAR TOKEN\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"//GENERAR TOKEN\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));\r",
+							"\r",
+							"pm.test(\"Esperando 60 segundos...\", async () => {\r",
+							"    await wait(60000);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"labels\": {\n   \"aliasType\": \"MERCHANT\",\n    \"aliasValue\": \"0064125313\",\n     \"type\": \"BUSINESS\",\n     \"name\": \"APROBANDO 32\",\n     \"proprietary\": \"NIT\",\n\t   \"identification\": \"1010101010\",\n     \"bankAccountType\": \"DBMI\",\n\t   \"bankAccountNumber\": \"12345654321\",\n\t\t \"countryOfResidence\": \"CO\",\n\t   \"bankBicfi\": \"7095\",\n\t\t \"bankName\": \"Banco Rojo\",\n\t\t \"routerReference\": \"$bancorojo\",\n    \"targetSpbviCode\":\"TFY\",\n\t \"bankId\": \"900504001\" ,\n     \"consented\": \"{{fecha_actual_formato_iso}}\"\n    ,\n         \"received\": \"{{fecha_actual_formato_iso}}\",\n         \"dispatched\":\"{{fecha_actual_formato_iso}}\" \n    \n   }\n}"
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancelar llave reutilizada",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"\r",
+							"//GENERAR TOKEN\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer <token>"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"labels\": { \r\n\t  \"status\": \"INACTIVE\",\r\n        \"allowImmediateReuse\":false\r\n   }\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer/{{handle}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer",
+						"{{handle}}"
+					]
+				},
+				"description": "Generated from cURL: curl --location '{{url}}/v1/signer/lookup.dice' \\\r\n--header 'Content-Type: application/json' \\\r\n--header 'Authorization: Bearer <token>' \\\r\n--data-raw '{\r\n\"aliasValue\": \"@testing\",\r\n\"received\": \"2025-04-10T15:49:15.015-05:00\",\r\n\"dispatched\": \"2025-04-10T15:49:15.015-05:00\"\r\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear llave no regulada",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const randomCel = _.random(3102047071,3992047071)\r",
+							"pm.variables.set(\"randomCel\", randomCel );\r",
+							"// Genera un valor aleatorio\r",
+							"let randomValue = Math.random();\r",
+							"\r",
+							"//GENERAR TOKEN\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parsear la respuesta JSON\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"// Capturar los valores deseados\r",
+							"let aliasValue = response.labels.aliasValue;\r",
+							"\r",
+							"\r",
+							"// Guardar en variables de entorno o colección\r",
+							"pm.environment.set(\"aliasValue\", aliasValue);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"labels\": {\n    \"aliasType\": \"PHONE\",\n    \"aliasValue\": \"{{randomCel}}\",\n     \"type\": \"BUSINESS\",\n     \"firstName\": \"CAMILO\",\n     \"secondName\": \"MANUEL\",\n     \"lastName\": \"MANJARREZ\",\n     \"secondLastName\": \"RAMIREZ\",\n     \"proprietary\": \"CC\",\n     \"identification\": \"1032360057\",\n     \"bankAccountType\": \"DBMO\",\n     \"bankAccountNumber\": \"9888774774\",\n     \"routerReference\": \"$bancorojo\",\n     \"targetSpbviCode\": \"TFY\",\n     \"bankBicfi\": \"7095\",\n     \"bankId\": \"900504002\"\n    \n   }\n}"
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar llave no regulada",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//GENERAR TOKEN\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer?aliasType=PHONE&aliasValue={{aliasValue}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer"
+					],
+					"query": [
+						{
+							"key": "aliasType",
+							"value": "PHONE"
+						},
+						{
+							"key": "aliasValue",
+							"value": "{{aliasValue}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Signer Regulado empresa",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"{\r",
+							"    pm.test(\"Status debe ser 200 OK\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"}\r",
+							"// Parsear la respuesta JSON\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"// Capturar los valores deseados\r",
+							"let aliasValue = response.labels.aliasValue;\r",
+							"let dispatched = response.labels.dispatched;\r",
+							"let received = response.labels.received;\r",
+							"\r",
+							"// Guardar en variables de entorno o colección\r",
+							"pm.environment.set(\"aliasValue\", aliasValue);\r",
+							"pm.environment.set(\"dispatched\", dispatched);\r",
+							"pm.environment.set(\"received\", received);\r",
+							"\r",
+							"\r",
+							"pm.test(\"Extraer handle\", function () {\r",
+							"    let response = pm.response.json(); // Parsear la respuesta como JSON\r",
+							"    pm.environment.set(\"handle\", response.handle); // Guardar el valor en una variable de entorno\r",
+							"    console.log(\"Handle capturado:\", response.handle);});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const randomCel = _.random(3102047071,3992047071)\r",
+							"pm.variables.set(\"randomCel\", randomCel );\r",
+							"// Genera un valor aleatorio\r",
+							"let randomValue = Math.random();\r",
+							"\r",
+							"// Generar número aleatorio de 12 dígitos\r",
+							"let identificacion = Math.floor(Math.random() * 9e11 + 1e11).toString() + Math.floor(Math.random() * 1e3).toString().padStart(3, '0');\r",
+							"\r",
+							"// Guardar como variable de entorno\r",
+							"pm.environment.set(\"identificacion\", identificacion);\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Generar una parte aleatoria para el nombre del correo\r",
+							"function generateRandomString(length) {\r",
+							"    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';\r",
+							"    let result = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        result += characters.charAt(Math.floor(Math.random() * characters.length));\r",
+							"    }\r",
+							"    return result;\r",
+							"}\r",
+							"\r",
+							"// Configurar el dominio del correo\r",
+							"const domain = 'example.com'; // Cambia este dominio si necesitas otro\r",
+							"const randomLocalPart = generateRandomString(8); // Parte local del correo (antes del @)\r",
+							"\r",
+							"// Generar el correo completo\r",
+							"const randomEmail = `${randomLocalPart}@${domain}`;\r",
+							"\r",
+							"// Guardar el correo en variables de entorno o colección\r",
+							"pm.environment.set('randomEmail', randomEmail);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Generar una cadena aleatoria de 10 caracteres para el campo ALFANUMERICO\r",
+							"function generateRandomString(length) {\r",
+							"    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+							"    let result = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        result += characters.charAt(Math.floor(Math.random() * characters.length));\r",
+							"    }\r",
+							"    return result;\r",
+							"}\r",
+							"\r",
+							"// Crear la variable\r",
+							"const alfanumerico = `@${generateRandomString(10)}`;\r",
+							"pm.environment.set('alfanumerico', alfanumerico);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Generar una cadena de 8 dígitos aleatorios para el campo MERCHANTID\r",
+							"function generateRandomDigits(length) {\r",
+							"    let result = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        result += Math.floor(Math.random() * 10); // Generar un dígito aleatorio entre 0 y 9\r",
+							"    }\r",
+							"    return result;\r",
+							"}\r",
+							"\r",
+							"// Crear la variable con prefijo '00'\r",
+							"const merchant = `00${generateRandomDigits(8)}`;\r",
+							"pm.environment.set('merchant', merchant);\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Función para generar una cadena aleatoria de dígitos de longitud especificada para el campo NUMERO DE CUENTA\r",
+							"function generateRandomNumericString(length) {\r",
+							"    const charset = '0123456789';  // Conjunto de caracteres numéricos\r",
+							"    let randomString = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        const randomIndex = Math.floor(Math.random() * charset.length);\r",
+							"        randomString += charset[randomIndex];\r",
+							"    }\r",
+							"    return randomString;\r",
+							"}\r",
+							"\r",
+							"// Genera un valor aleatorio de 34 dígitos\r",
+							"const randomNumericValue = generateRandomNumericString(34);\r",
+							"\r",
+							"// Establece el valor aleatorio en una variable\r",
+							"pm.variables.set(\"randomNumericValue\", randomNumericValue);\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Obtener la fecha actual\r",
+							"const date = new Date();\r",
+							" \r",
+							"// Obtener componentes con ceros a la izquierda\r",
+							"function pad(num, size = 2) {\r",
+							"    return ('00' + num).slice(-size);\r",
+							"}\r",
+							" \r",
+							"// Obtener la zona horaria en formato -05:00\r",
+							"function getTimeZoneOffset(date) {\r",
+							"    const offset = -date.getTimezoneOffset(); // en minutos\r",
+							"    const sign = offset >= 0 ? '+' : '-';\r",
+							"    const hours = pad(Math.floor(Math.abs(offset) / 60));\r",
+							"    const minutes = pad(Math.abs(offset) % 60);\r",
+							"    return `${sign}${hours}:${minutes}`;\r",
+							"}\r",
+							" \r",
+							"const isoDate = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}.${pad(date.getMilliseconds(), 3)}${getTimeZoneOffset(date)}`;\r",
+							" \r",
+							"pm.environment.set(\"fecha_actual_formato_iso\", isoDate);\r",
+							"\r",
+							"\r",
+							"//GENERAR TOKEN\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"//GENERAR TOKEN\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded: [\r",
+							"            { key: 'grant_type', value: 'client_credentials' },\r",
+							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+							"        ]\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(\"Error al obtener el token:\", err);\r",
+							"    } else {\r",
+							"        let token = res.json().access_token;\r",
+							"        pm.environment.set(\"access_token\", token);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{x-api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"labels\": {\n   \"aliasType\": \"MERCHANT\",\n    \"aliasValue\": \"{{merchant}}\",\n     \"type\": \"BUSINESS\",\n     \"name\": \"APROBANDO 32\",\n     \"proprietary\": \"NIT\",\n\t   \"identification\": \"1010101010\",\n     \"bankAccountType\": \"DBMI\",\n\t   \"bankAccountNumber\": \"12345654321\",\n\t\t \"countryOfResidence\": \"CO\",\n\t   \"bankBicfi\": \"7095\",\n\t\t \"bankName\": \"Banco Rojo\",\n\t\t \"routerReference\": \"$bancorojo\",\n    \"targetSpbviCode\":\"TFY\",\n\t \"bankId\": \"900504001\" ,\n     \"consented\": \"{{fecha_actual_formato_iso}}\"\n    ,\n         \"received\": \"{{fecha_actual_formato_iso}}\",\n         \"dispatched\":\"{{fecha_actual_formato_iso}}\" \n    \n   }\n}"
+				},
+				"url": {
+					"raw": "{{url}}/v1/signer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"signer"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,1 @@
+level: log, messages: Comentario del caso de prueba: ,Validar enviar SRV en el campo targetSpbviCode

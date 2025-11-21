@@ -1,0 +1,19 @@
+﻿source,target,identificacion,identificacion1,comentario
+svgs:200156743@3854,wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,CC,CC,Validar TIPO SEND Cuenta - Generico
+wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,wdtRpByvCEQ2FZbReWb5XhghiWURdooo7y,CE,CE,Validar TIPO SEND Generico - persona no regulada
+wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,wdkKTxyG8FVVturw1pPuskE35WSZRzSKEq,PEP,PEP,Validar TIPO SEND Generico - Busssines no regulada
+svgs:200156743@3854,dord:12345673238346456456@3854,NIT,NIT,Validar TIPO SEND Cuenta - Cuenta
+wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,svgs:200156743@3854,NUIP,NUIP,Validar TIPO SEND Generico a cuenta 
+wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,wQmLrUB8nEY9Dynw2meZ2q2iqwKgTNnHSy,TI,TI,Validar TIPO SEND Generico llave Regulada  Persona
+wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,wQxf26iZuJowF3ooTiTSZNZ4YVuf6jtpjV,PPT,PPT,Validar TIPO SEND Generico llave Regulada  Bussines
+wcMaHXjS2M9fYgx638PSZ3qonQVerfi6nM,wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,CC,CC,Validar TIPO SEND Persona no regulada a generico
+wWH9toGcuNKv2ev5cHjChcdnjkj7N3tuXF,wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,CC,CC,Validar TIPO SEND Bussines no regulada a generico
+wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,wUDC4rq5y6k2AdVHzgr11HNGeHtWsts3Zy,CE,CE,Validar TIPO SEND Generico Generico a generico 
+wbqj8aS1Fcpcqhdjrw2wUnZdN3tWo5XSzU,dord:12345673238346456456@3854,PEP,PEP,Validar TIPO SEND Generico cuenta a generica
+wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,wRndqGES95cG2YveiCPt4Y8ti3MFHjTd4h,NIT,NIT,Validar una transaccion tipo SEND con cuenta tipo SVGS
+wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,wQTa7mAdvtK76Bsy8eZhWprJGyLb3kYGPR,NUIP,NUIP,Validar una transaccion tipo SEND con cuenta tipo TRAS
+wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,wi8ngn9XDzPHQ7uZFkp3L2sHkN8tqoq7gy,TI,TI,Validar una transaccion tipo SEND con cuenta tipo CACC
+wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,wcrvonNnqLFWzDWSHjog4hxTdVd78ej1TX,PPT,PPT,Validar una transaccion tipo SEND con cuenta tipo OTHR
+wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,wf6MHVHhxwjRoDxDsLLsmXuimJKg3vEyLa,PAS,PAS,Validar una transaccion tipo SEND con cuenta tipo DORD
+wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,wTFf3o3tNX58tmwho9fw8h4qgz8vhUi9im,CC,CC,Validar una transaccion tipo SEND con cuenta tipo DBMO
+wYyvKipNemdB65wykZSEbeEVo2MS6nfsae,wZVKqh62ysQFDh113hsk4ucyEAATsDbRNk,CC,CC,Validar una transaccion tipo SEND con cuenta tipo DBMI
