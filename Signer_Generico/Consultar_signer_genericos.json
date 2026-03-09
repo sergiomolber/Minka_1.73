@@ -1,0 +1,127 @@
+{
+  "info": {
+    "_postman_id": "ecceb178-bcb5-497d-bc3b-a02413750734",
+    "name": "Consultar signer genericos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "29460625",
+    "_collection_link": "https://go.postman.co/collection/29460625-ecceb178-bcb5-497d-bc3b-a02413750734?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Generate Token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Captura la respuesta en formato JSON\r",
+              "var jsonData = pm.response.json();\r",
+              "\r",
+              "// Guarda el access_token en una variable global\r",
+              "pm.globals.set(\"access_token\", jsonData.access_token);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "client_Id",
+            "value": "{{clientId}}",
+            "type": "text"
+          },
+          {
+            "key": "client_Secrect",
+            "value": "{{clientSecret}}",
+            "type": "text"
+          },
+          {
+            "key": "apiKey",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "client_id",
+              "value": "{{clientId}}",
+              "type": "text"
+            },
+            {
+              "key": "client_secret",
+              "value": "{{clientSecret}}",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{url}}/oauth/token",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "oauth",
+            "token"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Consulta de signer tipo ACCOUNT",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-api-key",
+            "value": "EB3ec4d94292DE60f0b6AF77E5B264dCE7CA2CAb4Db22CeE7Ff6b99F"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiIkdGluLWFkbWluIiwiY2xpZW50SWQiOiI4MmYzY0U4NEU5ZUNGMzc1RjJiYjJCRTFFNEE2RjliYSIsIm9yZ2FuaXphdGlvbiI6IiRhY2giLCJkb21haW4iOiIkdGluIiwicmVhbG0iOiJkb21haW4iLCJzY29wZXMiOlsibWFuYWdlX29yZ2FuaXphdGlvbl9jcmVkZW50aWFscyIsIm1hbmFnZV9vd25fcmVzb3VyY2VzIiwicmVhZF9kb21haW5fYW5hbHl0aWNzIiwicmVhZF9kb21haW5fYXVkaXQtcmVjb3JkcyIsImNyZWF0ZV9kb21haW5fYXVkaXQtcmVjb3JkcyIsInJlYWRfYWxsX3NpZ25lcnMiLCJyZWFkX2RvbWFpbl9hdWRpdC1yZWNvcmRzIiwiY3JlYXRlX2RvbWFpbl9hdWRpdC1yZWNvcmRzIl0sInJvbGVzIjpbInNlcnZpY2UtdGluLWFkbWluIl0sImJhbmtJZCI6bnVsbCwiaWF0IjoxNzYzNDc5NDg1LCJleHAiOjE3NjM0ODMwODUsImlzcyI6Imh0dHBzOi8vbWlua2EuaW8ifQ.WHRaO1o4CfaA6uMvMvRhTvc87fp71HPgbzw50od0RWTu93jC9ATnen3-Xyjk7WGluHyxUWwQd0VDweIEPCNwyg"
+          }
+        ],
+        "url": {
+          "raw": "{{url}}/v1/signer?labels.aliasValue=dbmi:123556489534564@3854",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "v1",
+            "signer"
+          ],
+          "query": [
+            {
+              "key": "labels.aliasValue",
+              "value": "dbmi:123556489534564@3854"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

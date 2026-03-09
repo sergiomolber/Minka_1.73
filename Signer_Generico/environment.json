@@ -1,0 +1,89 @@
+{
+	"id": "03451756-2a94-4614-8594-5b529701b989",
+	"name": "VARIABLES ACH STG",
+	"values": [
+		{
+			"key": "url",
+			"value": "https://ach-minka-stg.transferenciasinmediatas.com",
+			"enabled": true
+		},
+		{
+			"key": "clientSecret",
+			"value": "cea0e4ce33c9cb730b76453f502c9ea8dfc90300d15eb9e6",
+			"type": "secret",
+			"enabled": true
+		},
+		{
+			"key": "clientId",
+			"value": "ee94177fbddb5f43b8c5d694b5a9b6df",
+			"type": "secret",
+			"enabled": true
+		},
+		{
+			"key": "walletBank",
+			"value": "$bancoamarillo",
+			"enabled": true
+		},
+		{
+			"key": "signerBank",
+			"value": "wWgzDhFbuHaxuJ52DgJ11QE3vw7zkUKXUS",
+			"enabled": true
+		},
+		{
+			"key": "walletUser",
+			"value": "$573013121105",
+			"enabled": true
+		},
+		{
+			"key": "currentdate",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "bankBicfi",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "bankName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "apiKey",
+			"value": "b7b0fffbf61945df247333a6d8e808d209da88f7f359502252839def",
+			"type": "secret",
+			"enabled": true
+		},
+		{
+			"key": "newsignerbank",
+			"value": "8a2b4da8-d707-40db-9b3b-114a7131e1d4",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "newsigneruser",
+			"value": "wRgjKRPh5gUMMNrWRZSLZQWPmdnei9r47h",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "current_timestamp",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"color": null,
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2026-03-09T16:05:05.783Z",
+	"_postman_exported_using": "Postman/11.87.1"
+}
