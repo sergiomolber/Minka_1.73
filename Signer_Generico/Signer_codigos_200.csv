@@ -1,19 +1,19 @@
 ﻿source,target,identificacion,identificacion1,comentario
-svgs:200156sdsds743@3854,svgs:200156sdsds743@3854,CC,CC,Validar TIPO SEND Cuenta - Generico
-svgs:200156sdsds743@3854,wdtRpByvCEQ2FZbReWb5XhghiWURdooo7y,CE,CE,Validar TIPO SEND Generico - persona no regulada
-svgs:200156sdsds743@3854,wdkKTxyG8FVVturw1pPuskE35WSZRzSKEq,PEP,PEP,Validar TIPO SEND Generico - Busssines no regulada
-svgs:200156743@3854,dord:12345673238346456456@3854,NIT,NIT,Validar TIPO SEND Cuenta - Cuenta
-svgs:200156sdsds743@3854,svgs:200156743@3854,NUIP,NUIP,Validar TIPO SEND Generico a cuenta 
-svgs:200156sdsds743@3854,wQmLrUB8nEY9Dynw2meZ2q2iqwKgTNnHSy,TI,TI,Validar TIPO SEND Generico llave Regulada  Persona
-svgs:200156sdsds743@3854,wQxf26iZuJowF3ooTiTSZNZ4YVuf6jtpjV,PPT,PPT,Validar TIPO SEND Generico llave Regulada  Bussines
-wcMaHXjS2M9fYgx638PSZ3qonQVerfi6nM,svgs:200156sdsds743@3854,CC,CC,Validar TIPO SEND Persona no regulada a generico
-wWH9toGcuNKv2ev5cHjChcdnjkj7N3tuXF,svgs:200156sdsds743@3854,CC,CC,Validar TIPO SEND Bussines no regulada a generico
-svgs:200156sdsds743@3854,wUDC4rq5y6k2AdVHzgr11HNGeHtWsts3Zy,CE,CE,Validar TIPO SEND Generico Generico a generico 
+svgs:20015632743@3854,cacc:2005554234@7095,CC,CC,Validar TIPO SEND Cuenta - Generico
+svgs:20015632743@3854,wdtRpByvCEQ2FZbReWb5XhghiWURdooo7y,CE,CE,Validar TIPO SEND Generico - persona no regulada
+svgs:20015632743@3854,wdkKTxyG8FVVturw1pPuskE35WSZRzSKEq,PEP,PEP,Validar TIPO SEND Generico - Busssines no regulada
+svgs:20015632743@3854,dord:12345673238346456456@3854,NIT,NIT,Validar TIPO SEND Cuenta - Cuenta
+svgs:20015632743@3854,svgs:20015632743@3854,NUIP,NUIP,Validar TIPO SEND Generico a cuenta 
+svgs:20015632743@3854,wQmLrUB8nEY9Dynw2meZ2q2iqwKgTNnHSy,TI,TI,Validar TIPO SEND Generico llave Regulada  Persona
+svgs:20015632743@3854,wQxf26iZuJowF3ooTiTSZNZ4YVuf6jtpjV,PPT,PPT,Validar TIPO SEND Generico llave Regulada  Bussines
+wcMaHXjS2M9fYgx638PSZ3qonQVerfi6nM,svgs:20015632743@3854,CC,CC,Validar TIPO SEND Persona no regulada a generico
+wWH9toGcuNKv2ev5cHjChcdnjkj7N3tuXF,svgs:20015632743@3854,CC,CC,Validar TIPO SEND Bussines no regulada a generico
+svgs:20015632743@3854,wUDC4rq5y6k2AdVHzgr11HNGeHtWsts3Zy,CE,CE,Validar TIPO SEND Generico Generico a generico 
 wbqj8aS1Fcpcqhdjrw2wUnZdN3tWo5XSzU,dord:12345673238346456456@3854,PEP,PEP,Validar TIPO SEND Generico cuenta a generica
-svgs:200156sdsds743@3854,wRndqGES95cG2YveiCPt4Y8ti3MFHjTd4h,NIT,NIT,Validar una transaccion tipo SEND con cuenta tipo SVGS
-svgs:200156sdsds743@3854,wQTa7mAdvtK76Bsy8eZhWprJGyLb3kYGPR,NUIP,NUIP,Validar una transaccion tipo SEND con cuenta tipo TRAS
-svgs:200156sdsds743@3854,wi8ngn9XDzPHQ7uZFkp3L2sHkN8tqoq7gy,TI,TI,Validar una transaccion tipo SEND con cuenta tipo CACC
-svgs:200156sdsds743@3854,wcrvonNnqLFWzDWSHjog4hxTdVd78ej1TX,PPT,PPT,Validar una transaccion tipo SEND con cuenta tipo OTHR
-svgs:200156sdsds743@3854,wf6MHVHhxwjRoDxDsLLsmXuimJKg3vEyLa,PA,PA,Validar una transaccion tipo SEND con cuenta tipo DORD
-svgs:200156sdsds743@3854,wTFf3o3tNX58tmwho9fw8h4qgz8vhUi9im,CC,CC,Validar una transaccion tipo SEND con cuenta tipo DBMO
-svgs:200156sdsds743@3854,wZVKqh62ysQFDh113hsk4ucyEAATsDbRNk,CC,CC,Validar una transaccion tipo SEND con cuenta tipo DBMI
+svgs:20015632743@3854,wRndqGES95cG2YveiCPt4Y8ti3MFHjTd4h,NIT,NIT,Validar una transaccion tipo SEND con cuenta tipo SVGS
+svgs:20015632743@3854,wQTa7mAdvtK76Bsy8eZhWprJGyLb3kYGPR,NUIP,NUIP,Validar una transaccion tipo SEND con cuenta tipo TRAS
+svgs:20015632743@3854,wi8ngn9XDzPHQ7uZFkp3L2sHkN8tqoq7gy,TI,TI,Validar una transaccion tipo SEND con cuenta tipo CACC
+svgs:20015632743@3854,wcrvonNnqLFWzDWSHjog4hxTdVd78ej1TX,PPT,PPT,Validar una transaccion tipo SEND con cuenta tipo OTHR
+svgs:20015632743@3854,wf6MHVHhxwjRoDxDsLLsmXuimJKg3vEyLa,PA,PA,Validar una transaccion tipo SEND con cuenta tipo DORD
+svgs:20015632743@3854,wTFf3o3tNX58tmwho9fw8h4qgz8vhUi9im,CC,CC,Validar una transaccion tipo SEND con cuenta tipo DBMO
+svgs:20015632743@3854,wZVKqh62ysQFDh113hsk4ucyEAATsDbRNk,CC,CC,Validar una transaccion tipo SEND con cuenta tipo DBMI

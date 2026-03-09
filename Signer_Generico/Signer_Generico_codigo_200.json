@@ -1,253 +1,273 @@
 {
-	"info": {
-		"_postman_id": "9abe605e-da9c-4132-88cc-3463628d6ea8",
-		"name": "Signer Genérico",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "29460625",
-		"_collection_link": "https://red-satellite-829132.postman.co/workspace/minka-1.73~64d101f2-860b-49f9-9d5d-7726db261f1d/collection/29460625-9abe605e-da9c-4132-88cc-3463628d6ea8?action=share&source=collection_link&creator=29460625"
-	},
-	"item": [
-		{
-			"name": "Crear transferencias correctamente Signer Generico",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"//GENERAR TOKEN\r",
-							"\r",
-							"pm.sendRequest({\r",
-							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
-							"    method: 'POST',\r",
-							"    header: {\r",
-							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
-							"    },\r",
-							"    body: {\r",
-							"        mode: 'urlencoded',\r",
-							"        urlencoded: [\r",
-							"            { key: 'grant_type', value: 'client_credentials' },\r",
-							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
-							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
-							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
-							"        ]\r",
-							"    }\r",
-							"}, function (err, res) {\r",
-							"    if (err) {\r",
-							"        console.log(\"Error al obtener el token:\", err);\r",
-							"    } else {\r",
-							"        let token = res.json().access_token;\r",
-							"        pm.environment.set(\"access_token\", token);\r",
-							"    }\r",
-							"});\r",
-							"\r",
-							"// Lista de nombres y apellidos posibles\r",
-							"const nombres = [\"Carlos\", \"Laura\", \"Sergio\", \"Valentina\", \"Andres\", \"Camila\", \"Julian\", \"Paula\"];\r",
-							"const apellidos = [\"Gomez\", \"Perez\", \"Rodriguez\", \"Martinez\", \"Torres\", \"Ramirez\", \"Lopez\", \"Castro\"];\r",
-							"\r",
-							"// Escoge un nombre y apellido al azar\r",
-							"const nombre = nombres[Math.floor(Math.random() * nombres.length)];\r",
-							"const apellido = apellidos[Math.floor(Math.random() * apellidos.length)];\r",
-							"\r",
-							"// Crea el nombre sin puntos, solo letras y números (si quieres añadir un número aleatorio)\r",
-							"const nombreSinPuntos = `${nombre}${apellido}${Math.floor(Math.random() * 1000)}`;\r",
-							"\r",
-							"// Guarda el valor en una variable de entorno o colección\r",
-							"pm.environment.set(\"nombreGenerado\", nombreSinPuntos);\r",
-							"\r",
-							"\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {},
-						"requests": {}
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"// Imprimir el comentario en la consola de Newman\r",
-							"console.log(\"Comentario del caso de prueba: \", pm.iterationData.get(\"comentario\"));\r",
-							"\r",
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"// Convertir la respuesta en JSON\r",
-							"let response = pm.response.json();\r",
-							"\r",
-							"// Extraer tx_ref\r",
-							"let tx_ref = response.labels.tx_ref;\r",
-							"\r",
-							"// Guardar en una variable de entorno en Postman\r",
-							"pm.globals.set(\"tx_ref\", tx_ref);\r",
-							"\r",
-							"// Mostrar en la consola de Postman\r",
-							"console.log(\"tx_ref:\", tx_ref);"
-						],
-						"type": "text/javascript",
-						"packages": {},
-						"requests": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{access_token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "x-api-key",
-						"value": "<API_KEY>"
-					},
-					{
-						"key": "Authorization",
-						"value": "Bearer <TOKEN>"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"source\": \"{{source}}\",\n    \"target\": \"{{target}}\",\n    \"amount\": \"130123\",\n    \"symbol\": \"$tin\",\n    \"labels\": {\n        \"type\": \"SEND\",\n        \"domain\": \"tin\",\n        \"description\": \"\",\n        \"sourceChannel\": \"APP\",\n        \"tx_id\": \"{{$randomPhoneNumber}}\",\n        \"source\": {\n            \"name\": \"{{nombreGenerado}}\",\n            \"proprietary\": \"{{identificacion1}}\",\n            \"identification\": \"1000405435345434345\"\n        },\n        \"target\": {\n            \"name\": \"{{nombreGenerado}}\",\n            \"proprietary\": \"{{identificacion}}\",\n            \"identification\": \"1000235689\"\n        },\n        \"deviceFingerPrint\": {\n            \"hash\": \"{{$randomUUID}}\",\n            \"ipAddress\": \"190.242.46.190\",\n            \"geolocation\": \"DC\",\n            \"country\": \"Colombia\",\n            \"city\": \"Bogota\",\n            \"mobileDevice\": \"a7dd84ds8\",\n            \"SIMCardId\": \"aaabb\",\n            \"model\": \"samnsung\",\n            \"operator\": \"claro\"\n        }\n    }\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/v1/transfer",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"v1",
-						"transfer"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Validar creacion de transferencia",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"pm.sendRequest({\r",
-							"    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
-							"    method: 'POST',\r",
-							"    header: {\r",
-							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
-							"    },\r",
-							"    body: {\r",
-							"        mode: 'urlencoded',\r",
-							"        urlencoded: [\r",
-							"            { key: 'grant_type', value: 'client_credentials' },\r",
-							"            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
-							"            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
-							"            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
-							"        ]\r",
-							"    }\r",
-							"}, function (err, res) {\r",
-							"    if (err) {\r",
-							"        console.log(\"Error al obtener el token:\", err);\r",
-							"    } else {\r",
-							"        let token = res.json().access_token;\r",
-							"        pm.environment.set(\"access_token\", token);\r",
-							"    }\r",
-							"});"
-						],
-						"type": "text/javascript",
-						"packages": {},
-						"requests": {}
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"let response = pm.response.json();\r",
-							"\r",
-							"// Verificamos que haya entidades y que el status esté presente\r",
-							"pm.test(\"Validar que la transferencia esté COMPLETED o ACCEPTED\", function () {\r",
-							"    pm.expect(response.entities, \"No hay entidades en la respuesta\").to.be.an(\"array\").that.is.not.empty;\r",
-							"    \r",
-							"    let status = response.entities[0].status;\r",
-							"    console.log(\"Estado de la transacción:\", status);\r",
-							"\r",
-							"    // Validación principal (acepta COMPLETED o ACCEPTED)\r",
-							"    pm.expect([\"COMPLETED\", \"ACCEPTED\"], \"El estado no es COMPLETED ni ACCEPTED\").to.include(status);\r",
-							"});\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {},
-						"requests": {}
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{access_token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "x-api-key",
-						"value": "{{x-api-key}}"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{url}}/v1/transfer?labels.tx_ref={{tx_ref}}",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"v1",
-						"transfer"
-					],
-					"query": [
-						{
-							"key": "labels.tx_ref",
-							"value": "{{tx_ref}}"
-						}
-					]
-				}
-			},
-			"response": []
-		}
-	]
+  "info": {
+    "_postman_id": "aad30123-5940-44d9-bdf8-7d6cd76f7748",
+    "name": "Signer Genérico",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "29460625",
+    "_collection_link": "https://go.postman.co/collection/29460625-aad30123-5940-44d9-bdf8-7d6cd76f7748?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Crear transferencias correctamente Signer Generico",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "//GENERAR TOKEN\r",
+              "\r",
+              "pm.sendRequest({\r",
+              "    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+              "    method: 'POST',\r",
+              "    header: {\r",
+              "        'Content-Type': 'application/x-www-form-urlencoded'\r",
+              "    },\r",
+              "    body: {\r",
+              "        mode: 'urlencoded',\r",
+              "        urlencoded: [\r",
+              "            { key: 'grant_type', value: 'client_credentials' },\r",
+              "            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+              "            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+              "            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+              "        ]\r",
+              "    }\r",
+              "}, function (err, res) {\r",
+              "    if (err) {\r",
+              "        console.log(\"Error al obtener el token:\", err);\r",
+              "    } else {\r",
+              "        let token = res.json().access_token;\r",
+              "        pm.environment.set(\"access_token\", token);\r",
+              "    }\r",
+              "});\r",
+              "\r",
+              "// Lista de nombres y apellidos posibles\r",
+              "const nombres = [\"Carlos\", \"Laura\", \"Sergio\", \"Valentina\", \"Andres\", \"Camila\", \"Julian\", \"Paula\"];\r",
+              "const apellidos = [\"Gomez\", \"Perez\", \"Rodriguez\", \"Martinez\", \"Torres\", \"Ramirez\", \"Lopez\", \"Castro\"];\r",
+              "\r",
+              "// Escoge un nombre y apellido al azar\r",
+              "const nombre = nombres[Math.floor(Math.random() * nombres.length)];\r",
+              "const apellido = apellidos[Math.floor(Math.random() * apellidos.length)];\r",
+              "\r",
+              "// Crea el nombre sin puntos, solo letras y números (si quieres añadir un número aleatorio)\r",
+              "const nombreSinPuntos = `${nombre}${apellido}${Math.floor(Math.random() * 1000)}`;\r",
+              "\r",
+              "// Guarda el valor en una variable de entorno o colección\r",
+              "pm.environment.set(\"nombreGenerado\", nombreSinPuntos);\r",
+              "\r",
+              "// Obtener fecha actual\r",
+              "const today = new Date();\r",
+              "const year = today.getFullYear();\r",
+              "const month = String(today.getMonth() + 1).padStart(2, '0');\r",
+              "const day = String(today.getDate()).padStart(2, '0');\r",
+              "\r",
+              "const datePart = `${year}${month}${day}`;\r",
+              "\r",
+              "// Generar 6 números aleatorios\r",
+              "const randomSix = Math.floor(100000 + Math.random() * 900000);\r",
+              "\r",
+              "// Parte fija\r",
+              "const fixedPart = \"900504001TFY0000000000\";\r",
+              "\r",
+              "// Construir valor final\r",
+              "const tx_id = `${datePart}${fixedPart}${randomSix}`;\r",
+              "\r",
+              "// Guardar variable en Postman\r",
+              "pm.environment.set(\"tx_id\", tx_id);\r",
+              "\r",
+              "console.log(\"tx_id generado:\", tx_id);\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Imprimir el comentario en la consola de Newman\r",
+              "console.log(\"Comentario del caso de prueba: \", pm.iterationData.get(\"comentario\"));\r",
+              "\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "// Convertir la respuesta en JSON\r",
+              "let response = pm.response.json();\r",
+              "\r",
+              "// Extraer tx_ref\r",
+              "let tx_ref = response.labels.tx_ref;\r",
+              "\r",
+              "// Guardar en una variable de entorno en Postman\r",
+              "pm.globals.set(\"tx_ref\", tx_ref);\r",
+              "\r",
+              "// Mostrar en la consola de Postman\r",
+              "console.log(\"tx_ref:\", tx_ref);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-api-key",
+            "value": "<API_KEY>"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer <TOKEN>"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"source\": \"{{source}}\",\n    \"target\": \"{{target}}\",\n    \"amount\": \"130123\",\n    \"symbol\": \"$tin\",\n    \"labels\": {\n        \"type\": \"SEND\",\n        \"domain\": \"tin\",\n        \"description\": \"\",\n        \"sourceChannel\": \"APP\",\n        \"tx_id\": \"{{tx_id}}\",\n        \"transactionPurpose\": \"TRANSFER\",\n        \"numberOfTransactions\": \"1\",\n\n        \"source\": {\n            \"name\": \"{{nombreGenerado}}\",\n            \"proprietary\": \"{{identificacion1}}\",\n            \"identification\": \"1000405435345434345\"\n        },\n        \"target\": {\n            \"name\": \"{{nombreGenerado}}\",\n            \"proprietary\": \"{{identificacion}}\",\n            \"identification\": \"1000235689\"\n        },\n        \"deviceFingerPrint\": {\n            \"hash\": \"{{$randomUUID}}\",\n            \"ipAddress\": \"190.242.46.190\",\n            \"geolocation\": \"DC\",\n            \"country\": \"Colombia\",\n            \"city\": \"Bogota\",\n            \"mobileDevice\": \"a7dd84ds8\",\n            \"SIMCardId\": \"aaabb\",\n            \"model\": \"samnsung\",\n            \"operator\": \"claro\"\n        }\n    }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/v1/transfer",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "v1",
+            "transfer"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Validar creacion de transferencia",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "pm.sendRequest({\r",
+              "    url: 'https://ach-minka-stg.transferenciasinmediatas.com/oauth/token',\r",
+              "    method: 'POST',\r",
+              "    header: {\r",
+              "        'Content-Type': 'application/x-www-form-urlencoded'\r",
+              "    },\r",
+              "    body: {\r",
+              "        mode: 'urlencoded',\r",
+              "        urlencoded: [\r",
+              "            { key: 'grant_type', value: 'client_credentials' },\r",
+              "            { key: 'client_id', value: pm.environment.get(\"client_id\") },\r",
+              "            { key: 'client_secret', value: pm.environment.get(\"client_secret\") },\r",
+              "            { key: 'audience', value: pm.environment.get(\"audience\") } // opcional según el proveedor\r",
+              "        ]\r",
+              "    }\r",
+              "}, function (err, res) {\r",
+              "    if (err) {\r",
+              "        console.log(\"Error al obtener el token:\", err);\r",
+              "    } else {\r",
+              "        let token = res.json().access_token;\r",
+              "        pm.environment.set(\"access_token\", token);\r",
+              "    }\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "let response = pm.response.json();\r",
+              "\r",
+              "// Verificamos que haya entidades y que el status esté presente\r",
+              "pm.test(\"Validar que la transferencia esté COMPLETED o ACCEPTED\", function () {\r",
+              "    pm.expect(response.entities, \"No hay entidades en la respuesta\").to.be.an(\"array\").that.is.not.empty;\r",
+              "    \r",
+              "    let status = response.entities[0].status;\r",
+              "    console.log(\"Estado de la transacción:\", status);\r",
+              "\r",
+              "    // Validación principal (acepta COMPLETED o ACCEPTED)\r",
+              "    pm.expect([\"COMPLETED\", \"ACCEPTED\"], \"El estado no es COMPLETED ni ACCEPTED\").to.include(status);\r",
+              "});\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-api-key",
+            "value": "{{x-api-key}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{url}}/v1/transfer?labels.tx_ref={{tx_ref}}",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "v1",
+            "transfer"
+          ],
+          "query": [
+            {
+              "key": "labels.tx_ref",
+              "value": "{{tx_ref}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
 }
